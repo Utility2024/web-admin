@@ -5,7 +5,7 @@ namespace App\Filament\Widgets;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
-class Ticketing extends BaseWidget
+class ATicketing extends BaseWidget
 {
     protected function getStats(): array
     {

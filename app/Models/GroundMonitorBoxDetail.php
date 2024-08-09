@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use App\Models\User;
-use Spatie\Activitylog\LogOptions;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\Activitylog\Traits\LogsActivity;
+
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class GroundMonitorBoxDetail extends Model implements Auditable
+class GroundMonitorBoxDetail extends Model 
 {
-    use HasFactory, LogsActivity,\OwenIt\Auditing\Auditable;
+    use HasFactory;
 
     protected $connection = 'mysql_esd';
 
@@ -28,19 +28,6 @@ class GroundMonitorBoxDetail extends Model implements Auditable
     public function groundMonitorBox()
     {
         return $this->belongsTo(GroundMonitorBox::class);
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-        ->logOnly([
-            'ground_monitor_box_id',
-            'area',
-            'location',
-            'g1',
-            'g2',
-            'remarks'
-        ]);
     }
 
     public function creator()

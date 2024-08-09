@@ -3,17 +3,17 @@
 namespace App\Models;
 
 use App\Models\User;
-use Spatie\Activitylog\LogOptions;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\Activitylog\Traits\LogsActivity;
+
+
 use EightyNine\Approvals\Models\ApprovableModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class EquipmentGroundDetail extends Model implements Auditable
+class EquipmentGroundDetail extends Model 
 {
-    use HasFactory, LogsActivity, \OwenIt\Auditing\Auditable;
+    use HasFactory;
 
     protected $connection = 'mysql_esd';
 
@@ -27,12 +27,6 @@ class EquipmentGroundDetail extends Model implements Auditable
         'judgement_volts',
         'remarks',
     ];
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-        ->logOnly(['equipment_ground_id', 'area', 'location', 'measure_results_ohm', 'judgement_ohm','measure_results_volts', 'judgement_volts', 'remarks']);
-    }
 
     public function equipmentGround()
     {

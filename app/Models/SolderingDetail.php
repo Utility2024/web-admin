@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use App\Models\User;
-use Spatie\Activitylog\LogOptions;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\Activitylog\Traits\LogsActivity;
+
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class SolderingDetail extends Model implements Auditable
+class SolderingDetail extends Model 
 {
-    use HasFactory, LogsActivity, \OwenIt\Auditing\Auditable;
+    use HasFactory;
 
     protected $connection = 'mysql_esd';
 
@@ -28,19 +28,6 @@ class SolderingDetail extends Model implements Auditable
     public function soldering()
     {
         return $this->belongsTo(Soldering::class);
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-        ->logOnly([
-            'soldering_id',
-            'area',
-            'location',
-            'e1',
-            'judgement',
-            'remarks'
-        ]);
     }
 
     public function creator()

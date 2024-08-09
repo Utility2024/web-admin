@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use App\Models\User;
-use Spatie\Activitylog\LogOptions;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\Activitylog\Traits\LogsActivity;
+
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class IonizerDetail extends Model implements Auditable
+class IonizerDetail extends Model 
 {
-    use HasFactory, LogsActivity, \OwenIt\Auditing\Auditable;
+    use HasFactory;
 
     protected $connection = 'mysql_esd';
 
@@ -43,26 +43,6 @@ class IonizerDetail extends Model implements Auditable
     public function ionizer()
     {
         return $this->belongsTo(Ionizer::class);
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-        ->logOnly([
-            'ionizer_id',
-            'area',
-            'location',
-            'pm_1',
-            'pm_2',
-            'pm_3',
-            'c1',
-            'judgement_c1',
-            'c2',
-            'judgement_c2',
-            'c3',
-            'judgement_c3',
-            'remarks'
-        ]);
     }
 
     public function creator()

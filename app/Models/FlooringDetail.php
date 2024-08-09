@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use App\Models\User;
-use Spatie\Activitylog\LogOptions;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\Activitylog\Traits\LogsActivity;
+
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class FlooringDetail extends Model implements Auditable
+class FlooringDetail extends Model 
 {
-    use HasFactory, LogsActivity, \OwenIt\Auditing\Auditable;
+    use HasFactory;
 
     protected $connection = 'mysql_esd';
 
@@ -21,12 +21,6 @@ class FlooringDetail extends Model implements Auditable
     public function flooring()
     {
         return $this->belongsTo(Flooring::class);
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-        ->logOnly(['flooring_id', 'area', 'location', 'b1', 'b1_scientific', 'judgement', 'remarks']);
     }
 
     public function creator()

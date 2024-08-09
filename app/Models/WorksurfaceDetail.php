@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use App\Models\User;
-use Spatie\Activitylog\LogOptions;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\Activitylog\Traits\LogsActivity;
+
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class WorksurfaceDetail extends Model implements Auditable
+class WorksurfaceDetail extends Model 
 {
-    use HasFactory, LogsActivity,\OwenIt\Auditing\Auditable;
+    use HasFactory;
 
     protected $connection = 'mysql_esd';
 
@@ -34,23 +34,6 @@ class WorksurfaceDetail extends Model implements Auditable
     public function worksurface()
     {
         return $this->belongsTo(Worksurface::class);
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-        ->logOnly([
-            'worksurface_id',
-            'area',
-            'location',
-            'item',
-            'a1',
-            'a1_scientific',
-            'judgement_a1',
-            'a2',
-            'judgement_a2',
-            'remarks'
-        ]);
     }
 
     public function creator()
