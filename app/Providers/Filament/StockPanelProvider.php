@@ -1,0 +1,75 @@
+<?php
+
+namespace App\Providers\Filament;
+
+use Filament\Http\Middleware\Authenticate;
+use Filament\Http\Middleware\DisableBladeIconComponents;
+use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Pages;
+use Filament\Panel;
+use Filament\PanelProvider;
+use Filament\Support\Colors\Color;
+use Filament\Widgets;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Session\Middleware\AuthenticateSession;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Navigation\NavigationItem;
+use Filament\Pages\Dashboard;
+
+class StockPanelProvider extends PanelProvider
+{
+    public function panel(Panel $panel): Panel
+    {
+        return $panel
+            ->id('stock')
+            ->path('stock')
+            ->sidebarCollapsibleOnDesktop()
+            ->brandName('Stock Control Material')
+            ->navigationItems([
+                NavigationItem::make('Go To Home')
+                    ->url('http://127.0.0.1:8000/admin')
+                    ->icon('heroicon-o-queue-list')
+                    ->sort(3),
+                NavigationItem::make('dashboard')
+                    ->label(fn (): string => __('filament-panels::pages/dashboard.title'))
+                    ->url(fn (): string => Dashboard::getUrl())
+                    ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.dashboard'))
+                    ->icon('heroicon-o-home'),
+            ])
+            ->plugin(
+                \Hasnayeen\Themes\ThemesPlugin::make()
+            )
+            ->colors([
+                'primary' => Color::Amber,
+            ])
+            ->discoverResources(in: app_path('Filament/Stock/Resources'), for: 'App\\Filament\\Stock\\Resources')
+            ->discoverPages(in: app_path('Filament/Stock/Pages'), for: 'App\\Filament\\Stock\\Pages')
+            ->pages([
+                Pages\Dashboard::class,
+            ])
+            ->discoverWidgets(in: app_path('Filament/Stock/Widgets'), for: 'App\\Filament\\Stock\\Widgets')
+            ->widgets([
+                Widgets\AccountWidget::class,
+                Widgets\FilamentInfoWidget::class,
+            ])
+            ->middleware([
+                EncryptCookies::class,
+                AddQueuedCookiesToResponse::class,
+                StartSession::class,
+                AuthenticateSession::class,
+                ShareErrorsFromSession::class,
+                VerifyCsrfToken::class,
+                SubstituteBindings::class,
+                DisableBladeIconComponents::class,
+                DispatchServingFilamentEvent::class,
+                \Hasnayeen\Themes\Http\Middleware\SetTheme::class
+            ])
+            ->authMiddleware([
+                Authenticate::class,
+            ]);
+    }
+}
