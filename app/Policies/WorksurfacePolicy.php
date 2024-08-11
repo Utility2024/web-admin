@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
-use App\Models\Worksurface;
 use App\Models\User;
+use App\Models\Worksurface;
+use Illuminate\Auth\Access\Response;
 
 class WorksurfacePolicy
 {
@@ -13,7 +13,7 @@ class WorksurfacePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Worksurface');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -21,7 +21,7 @@ class WorksurfacePolicy
      */
     public function view(User $user, Worksurface $worksurface): bool
     {
-        return $user->checkPermissionTo('view Worksurface');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,7 +29,7 @@ class WorksurfacePolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Worksurface');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -37,7 +37,7 @@ class WorksurfacePolicy
      */
     public function update(User $user, Worksurface $worksurface): bool
     {
-        return $user->checkPermissionTo('update Worksurface');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -45,7 +45,7 @@ class WorksurfacePolicy
      */
     public function delete(User $user, Worksurface $worksurface): bool
     {
-        return $user->checkPermissionTo('delete Worksurface');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -53,7 +53,7 @@ class WorksurfacePolicy
      */
     public function restore(User $user, Worksurface $worksurface): bool
     {
-        return $user->checkPermissionTo('restore Worksurface');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -61,6 +61,6 @@ class WorksurfacePolicy
      */
     public function forceDelete(User $user, Worksurface $worksurface): bool
     {
-        return $user->checkPermissionTo('force-delete Worksurface');
+        return $user->isSuperAdmin();
     }
 }

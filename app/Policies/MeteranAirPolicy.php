@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\MeteranAir;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class MeteranAirPolicy
 {
@@ -13,15 +13,15 @@ class MeteranAirPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any MeteranAir');
+        return $user->isAdminUtility(); // Only AdminUtility can access
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, MeteranAir $meteranair): bool
+    public function view(User $user, MeteranAir $meteranAir): bool
     {
-        return $user->checkPermissionTo('view MeteranAir');
+        return $user->isAdminUtility(); // Only AdminUtility can access
     }
 
     /**
@@ -29,38 +29,38 @@ class MeteranAirPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create MeteranAir');
+        return $user->isAdminUtility(); // Only AdminUtility can access
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, MeteranAir $meteranair): bool
+    public function update(User $user, MeteranAir $meteranAir): bool
     {
-        return $user->checkPermissionTo('update MeteranAir');
+        return $user->isAdminUtility(); // Only AdminUtility can access
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, MeteranAir $meteranair): bool
+    public function delete(User $user, MeteranAir $meteranAir): bool
     {
-        return $user->checkPermissionTo('delete MeteranAir');
+        return $user->isSuperAdmin(); // Only SuperAdmin can delete
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, MeteranAir $meteranair): bool
+    public function restore(User $user, MeteranAir $meteranAir): bool
     {
-        return $user->checkPermissionTo('restore MeteranAir');
+        return $user->isAdminUtility(); // Only AdminUtility can access
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, MeteranAir $meteranair): bool
+    public function forceDelete(User $user, MeteranAir $meteranAir): bool
     {
-        return $user->checkPermissionTo('force-delete MeteranAir');
+        return $user->isSuperAdmin(); // Only SuperAdmin can permanently delete
     }
 }

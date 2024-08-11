@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\GarmentDetail;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class GarmentDetailPolicy
 {
@@ -13,15 +13,15 @@ class GarmentDetailPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any GarmentDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, GarmentDetail $garmentdetail): bool
+    public function view(User $user, GarmentDetail $garmentDetail): bool
     {
-        return $user->checkPermissionTo('view GarmentDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,38 +29,38 @@ class GarmentDetailPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create GarmentDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, GarmentDetail $garmentdetail): bool
+    public function update(User $user, GarmentDetail $garmentDetail): bool
     {
-        return $user->checkPermissionTo('update GarmentDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, GarmentDetail $garmentdetail): bool
+    public function delete(User $user, GarmentDetail $garmentDetail): bool
     {
-        return $user->checkPermissionTo('delete GarmentDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, GarmentDetail $garmentdetail): bool
+    public function restore(User $user, GarmentDetail $garmentDetail): bool
     {
-        return $user->checkPermissionTo('restore GarmentDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, GarmentDetail $garmentdetail): bool
+    public function forceDelete(User $user, GarmentDetail $garmentDetail): bool
     {
-        return $user->checkPermissionTo('force-delete GarmentDetail');
+        return $user->isSuperAdmin();
     }
 }

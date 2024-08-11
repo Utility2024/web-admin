@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\FlooringDetail;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class FlooringDetailPolicy
 {
@@ -13,15 +13,15 @@ class FlooringDetailPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any FlooringDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, FlooringDetail $flooringdetail): bool
+    public function view(User $user, FlooringDetail $flooringDetail): bool
     {
-        return $user->checkPermissionTo('view FlooringDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,38 +29,38 @@ class FlooringDetailPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create FlooringDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, FlooringDetail $flooringdetail): bool
+    public function update(User $user, FlooringDetail $flooringDetail): bool
     {
-        return $user->checkPermissionTo('update FlooringDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, FlooringDetail $flooringdetail): bool
+    public function delete(User $user, FlooringDetail $flooringDetail): bool
     {
-        return $user->checkPermissionTo('delete FlooringDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, FlooringDetail $flooringdetail): bool
+    public function restore(User $user, FlooringDetail $flooringDetail): bool
     {
-        return $user->checkPermissionTo('restore FlooringDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, FlooringDetail $flooringdetail): bool
+    public function forceDelete(User $user, FlooringDetail $flooringDetail): bool
     {
-        return $user->checkPermissionTo('force-delete FlooringDetail');
+        return $user->isSuperAdmin();
     }
 }

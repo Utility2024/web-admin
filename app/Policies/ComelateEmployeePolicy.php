@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\ComelateEmployee;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class ComelateEmployeePolicy
 {
@@ -13,15 +13,17 @@ class ComelateEmployeePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any ComelateEmployee');
+        // Hanya SuperAdmin dan AdminHR yang bisa melihat semua model
+        return $user->isSuperAdmin() || $user->isAdminHr();
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, ComelateEmployee $comelateemployee): bool
+    public function view(User $user, ComelateEmployee $comelateEmployee): bool
     {
-        return $user->checkPermissionTo('view ComelateEmployee');
+        // Hanya SuperAdmin dan AdminHR yang bisa melihat model tertentu
+        return $user->isSuperAdmin() || $user->isAdminHr();
     }
 
     /**
@@ -29,38 +31,43 @@ class ComelateEmployeePolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create ComelateEmployee');
+        // Hanya SuperAdmin dan AdminHR yang bisa membuat model
+        return $user->isSuperAdmin() || $user->isAdminHr();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, ComelateEmployee $comelateemployee): bool
+    public function update(User $user, ComelateEmployee $comelateEmployee): bool
     {
-        return $user->checkPermissionTo('update ComelateEmployee');
+        // Hanya SuperAdmin dan AdminHR yang bisa mengupdate model
+        return $user->isSuperAdmin() || $user->isAdminHr();
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, ComelateEmployee $comelateemployee): bool
+    public function delete(User $user, ComelateEmployee $comelateEmployee): bool
     {
-        return $user->checkPermissionTo('delete ComelateEmployee');
+        // Hanya SuperAdmin yang bisa menghapus model, AdminHR tidak bisa
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, ComelateEmployee $comelateemployee): bool
+    public function restore(User $user, ComelateEmployee $comelateEmployee): bool
     {
-        return $user->checkPermissionTo('restore ComelateEmployee');
+        // Hanya SuperAdmin dan AdminHR yang bisa merestore model
+        return $user->isSuperAdmin() || $user->isAdminHr();
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, ComelateEmployee $comelateemployee): bool
+    public function forceDelete(User $user, ComelateEmployee $comelateEmployee): bool
     {
-        return $user->checkPermissionTo('force-delete ComelateEmployee');
+        // Hanya SuperAdmin yang bisa menghapus model secara permanen
+        return $user->isSuperAdmin();
     }
 }

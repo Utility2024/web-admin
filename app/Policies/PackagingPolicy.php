@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\Packaging;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class PackagingPolicy
 {
@@ -13,7 +13,7 @@ class PackagingPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Packaging');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -21,7 +21,7 @@ class PackagingPolicy
      */
     public function view(User $user, Packaging $packaging): bool
     {
-        return $user->checkPermissionTo('view Packaging');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,7 +29,7 @@ class PackagingPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Packaging');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -37,7 +37,7 @@ class PackagingPolicy
      */
     public function update(User $user, Packaging $packaging): bool
     {
-        return $user->checkPermissionTo('update Packaging');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -45,7 +45,7 @@ class PackagingPolicy
      */
     public function delete(User $user, Packaging $packaging): bool
     {
-        return $user->checkPermissionTo('delete Packaging');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -53,7 +53,7 @@ class PackagingPolicy
      */
     public function restore(User $user, Packaging $packaging): bool
     {
-        return $user->checkPermissionTo('restore Packaging');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -61,6 +61,6 @@ class PackagingPolicy
      */
     public function forceDelete(User $user, Packaging $packaging): bool
     {
-        return $user->checkPermissionTo('force-delete Packaging');
+        return $user->isSuperAdmin();
     }
 }

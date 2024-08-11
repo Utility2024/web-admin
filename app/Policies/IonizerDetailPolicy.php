@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\IonizerDetail;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class IonizerDetailPolicy
 {
@@ -13,15 +13,15 @@ class IonizerDetailPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any IonizerDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, IonizerDetail $ionizerdetail): bool
+    public function view(User $user, IonizerDetail $ionizerDetail): bool
     {
-        return $user->checkPermissionTo('view IonizerDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,38 +29,38 @@ class IonizerDetailPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create IonizerDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, IonizerDetail $ionizerdetail): bool
+    public function update(User $user, IonizerDetail $ionizerDetail): bool
     {
-        return $user->checkPermissionTo('update IonizerDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, IonizerDetail $ionizerdetail): bool
+    public function delete(User $user, IonizerDetail $ionizerDetail): bool
     {
-        return $user->checkPermissionTo('delete IonizerDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, IonizerDetail $ionizerdetail): bool
+    public function restore(User $user, IonizerDetail $ionizerDetail): bool
     {
-        return $user->checkPermissionTo('restore IonizerDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, IonizerDetail $ionizerdetail): bool
+    public function forceDelete(User $user, IonizerDetail $ionizerDetail): bool
     {
-        return $user->checkPermissionTo('force-delete IonizerDetail');
+        return $user->isSuperAdmin();
     }
 }

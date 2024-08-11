@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\Soldering;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class SolderingPolicy
 {
@@ -13,7 +13,7 @@ class SolderingPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Soldering');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -21,7 +21,7 @@ class SolderingPolicy
      */
     public function view(User $user, Soldering $soldering): bool
     {
-        return $user->checkPermissionTo('view Soldering');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,7 +29,7 @@ class SolderingPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Soldering');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -37,7 +37,7 @@ class SolderingPolicy
      */
     public function update(User $user, Soldering $soldering): bool
     {
-        return $user->checkPermissionTo('update Soldering');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -45,7 +45,7 @@ class SolderingPolicy
      */
     public function delete(User $user, Soldering $soldering): bool
     {
-        return $user->checkPermissionTo('delete Soldering');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -53,7 +53,7 @@ class SolderingPolicy
      */
     public function restore(User $user, Soldering $soldering): bool
     {
-        return $user->checkPermissionTo('restore Soldering');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -61,6 +61,6 @@ class SolderingPolicy
      */
     public function forceDelete(User $user, Soldering $soldering): bool
     {
-        return $user->checkPermissionTo('force-delete Soldering');
+        return $user->isSuperAdmin();
     }
 }

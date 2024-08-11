@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\Flooring;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class FlooringPolicy
 {
@@ -13,7 +13,7 @@ class FlooringPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Flooring');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -21,7 +21,7 @@ class FlooringPolicy
      */
     public function view(User $user, Flooring $flooring): bool
     {
-        return $user->checkPermissionTo('view Flooring');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,7 +29,7 @@ class FlooringPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Flooring');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -37,7 +37,7 @@ class FlooringPolicy
      */
     public function update(User $user, Flooring $flooring): bool
     {
-        return $user->checkPermissionTo('update Flooring');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -45,7 +45,7 @@ class FlooringPolicy
      */
     public function delete(User $user, Flooring $flooring): bool
     {
-        return $user->checkPermissionTo('delete Flooring');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -53,7 +53,7 @@ class FlooringPolicy
      */
     public function restore(User $user, Flooring $flooring): bool
     {
-        return $user->checkPermissionTo('restore Flooring');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -61,6 +61,6 @@ class FlooringPolicy
      */
     public function forceDelete(User $user, Flooring $flooring): bool
     {
-        return $user->checkPermissionTo('force-delete Flooring');
+        return $user->isSuperAdmin();
     }
 }

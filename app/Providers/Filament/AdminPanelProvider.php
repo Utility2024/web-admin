@@ -21,6 +21,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use App\Filament\Pages\Auth\EditProfile;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -39,8 +40,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->id('admin')
             ->path('admin')
-            ->login()
-            ->profile()
+            // ->login()
+            ->profile(EditProfile::class)
             ->registration()
             ->colors([
                 'primary' => Color::Amber,

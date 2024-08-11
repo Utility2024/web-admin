@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\PackagingDetail;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class PackagingDetailPolicy
 {
@@ -13,15 +13,15 @@ class PackagingDetailPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any PackagingDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, PackagingDetail $packagingdetail): bool
+    public function view(User $user, PackagingDetail $packagingDetail): bool
     {
-        return $user->checkPermissionTo('view PackagingDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,38 +29,38 @@ class PackagingDetailPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create PackagingDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, PackagingDetail $packagingdetail): bool
+    public function update(User $user, PackagingDetail $packagingDetail): bool
     {
-        return $user->checkPermissionTo('update PackagingDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, PackagingDetail $packagingdetail): bool
+    public function delete(User $user, PackagingDetail $packagingDetail): bool
     {
-        return $user->checkPermissionTo('delete PackagingDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, PackagingDetail $packagingdetail): bool
+    public function restore(User $user, PackagingDetail $packagingDetail): bool
     {
-        return $user->checkPermissionTo('restore PackagingDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, PackagingDetail $packagingdetail): bool
+    public function forceDelete(User $user, PackagingDetail $packagingDetail): bool
     {
-        return $user->checkPermissionTo('force-delete PackagingDetail');
+        return $user->isSuperAdmin();
     }
 }

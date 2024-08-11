@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\Garment;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class GarmentPolicy
 {
@@ -13,7 +13,7 @@ class GarmentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Garment');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -21,7 +21,7 @@ class GarmentPolicy
      */
     public function view(User $user, Garment $garment): bool
     {
-        return $user->checkPermissionTo('view Garment');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,7 +29,7 @@ class GarmentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Garment');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -37,7 +37,7 @@ class GarmentPolicy
      */
     public function update(User $user, Garment $garment): bool
     {
-        return $user->checkPermissionTo('update Garment');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -45,7 +45,7 @@ class GarmentPolicy
      */
     public function delete(User $user, Garment $garment): bool
     {
-        return $user->checkPermissionTo('delete Garment');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -53,7 +53,7 @@ class GarmentPolicy
      */
     public function restore(User $user, Garment $garment): bool
     {
-        return $user->checkPermissionTo('restore Garment');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -61,6 +61,6 @@ class GarmentPolicy
      */
     public function forceDelete(User $user, Garment $garment): bool
     {
-        return $user->checkPermissionTo('force-delete Garment');
+        return $user->isSuperAdmin();
     }
 }

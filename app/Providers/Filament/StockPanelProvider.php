@@ -31,7 +31,7 @@ class StockPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->brandName('Stock Control Material')
             ->navigationItems([
-                NavigationItem::make('Go To Home')
+                NavigationItem::make('Main Menu')
                     ->url('http://127.0.0.1:8000/admin')
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
@@ -57,8 +57,8 @@ class StockPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Stock/Widgets'), for: 'App\\Filament\\Stock\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\AccountWidget::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -70,7 +70,8 @@ class StockPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                \Hasnayeen\Themes\Http\Middleware\SetTheme::class
+                \Hasnayeen\Themes\Http\Middleware\SetTheme::class,
+                \App\Http\Middleware\CheckStockAccess::class,
             ])
             ->authMiddleware([
                 Authenticate::class,

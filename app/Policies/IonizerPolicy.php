@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\Ionizer;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class IonizerPolicy
 {
@@ -13,7 +13,7 @@ class IonizerPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Ionizer');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -21,7 +21,7 @@ class IonizerPolicy
      */
     public function view(User $user, Ionizer $ionizer): bool
     {
-        return $user->checkPermissionTo('view Ionizer');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,7 +29,7 @@ class IonizerPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Ionizer');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -37,7 +37,7 @@ class IonizerPolicy
      */
     public function update(User $user, Ionizer $ionizer): bool
     {
-        return $user->checkPermissionTo('update Ionizer');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -45,7 +45,7 @@ class IonizerPolicy
      */
     public function delete(User $user, Ionizer $ionizer): bool
     {
-        return $user->checkPermissionTo('delete Ionizer');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -53,7 +53,7 @@ class IonizerPolicy
      */
     public function restore(User $user, Ionizer $ionizer): bool
     {
-        return $user->checkPermissionTo('restore Ionizer');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -61,6 +61,6 @@ class IonizerPolicy
      */
     public function forceDelete(User $user, Ionizer $ionizer): bool
     {
-        return $user->checkPermissionTo('force-delete Ionizer');
+        return $user->isSuperAdmin();
     }
 }

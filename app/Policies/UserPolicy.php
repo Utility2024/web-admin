@@ -2,9 +2,8 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
-
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
@@ -13,7 +12,8 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any User');
+        // Hanya SuperAdmin yang bisa melihat semua model
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -21,7 +21,8 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return $user->checkPermissionTo('view User');
+        // Hanya SuperAdmin yang bisa melihat model tertentu
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -29,7 +30,8 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create User');
+        // Hanya SuperAdmin yang bisa membuat model
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -37,7 +39,8 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->checkPermissionTo('update User');
+        // Hanya SuperAdmin yang bisa mengupdate model
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -45,7 +48,8 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $user->checkPermissionTo('delete User');
+        // Hanya SuperAdmin yang bisa menghapus model
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -53,7 +57,8 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        return $user->checkPermissionTo('restore User');
+        // Hanya SuperAdmin yang bisa merestore model
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -61,6 +66,7 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
-        return $user->checkPermissionTo('force-delete User');
+        // Hanya SuperAdmin yang bisa menghapus model secara permanen
+        return $user->isSuperAdmin();
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\SolderingDetail;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class SolderingDetailPolicy
 {
@@ -13,15 +13,15 @@ class SolderingDetailPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any SolderingDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, SolderingDetail $solderingdetail): bool
+    public function view(User $user, SolderingDetail $solderingDetail): bool
     {
-        return $user->checkPermissionTo('view SolderingDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,38 +29,38 @@ class SolderingDetailPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create SolderingDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, SolderingDetail $solderingdetail): bool
+    public function update(User $user, SolderingDetail $solderingDetail): bool
     {
-        return $user->checkPermissionTo('update SolderingDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, SolderingDetail $solderingdetail): bool
+    public function delete(User $user, SolderingDetail $solderingDetail): bool
     {
-        return $user->checkPermissionTo('delete SolderingDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, SolderingDetail $solderingdetail): bool
+    public function restore(User $user, SolderingDetail $solderingDetail): bool
     {
-        return $user->checkPermissionTo('restore SolderingDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, SolderingDetail $solderingdetail): bool
+    public function forceDelete(User $user, SolderingDetail $solderingDetail): bool
     {
-        return $user->checkPermissionTo('force-delete SolderingDetail');
+        return $user->isSuperAdmin();
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\Transaction;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class TransactionPolicy
 {
@@ -13,7 +13,7 @@ class TransactionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Transaction');
+        return ! $user->isUser(); // Allow all roles except User
     }
 
     /**
@@ -21,7 +21,7 @@ class TransactionPolicy
      */
     public function view(User $user, Transaction $transaction): bool
     {
-        return $user->checkPermissionTo('view Transaction');
+        return ! $user->isUser(); // Allow all roles except User
     }
 
     /**
@@ -29,7 +29,7 @@ class TransactionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Transaction');
+        return ! $user->isUser(); // Allow all roles except User
     }
 
     /**
@@ -37,7 +37,7 @@ class TransactionPolicy
      */
     public function update(User $user, Transaction $transaction): bool
     {
-        return $user->checkPermissionTo('update Transaction');
+        return ! $user->isUser(); // Allow all roles except User
     }
 
     /**
@@ -45,7 +45,7 @@ class TransactionPolicy
      */
     public function delete(User $user, Transaction $transaction): bool
     {
-        return $user->checkPermissionTo('delete Transaction');
+        return $user->isSuperAdmin(); // Only SuperAdmin can delete
     }
 
     /**
@@ -53,7 +53,7 @@ class TransactionPolicy
      */
     public function restore(User $user, Transaction $transaction): bool
     {
-        return $user->checkPermissionTo('restore Transaction');
+        return ! $user->isUser(); // Allow all roles except User
     }
 
     /**
@@ -61,6 +61,6 @@ class TransactionPolicy
      */
     public function forceDelete(User $user, Transaction $transaction): bool
     {
-        return $user->checkPermissionTo('force-delete Transaction');
+        return $user->isSuperAdmin(); // Only SuperAdmin can permanently delete
     }
 }

@@ -45,9 +45,9 @@ class UserResource extends Resource
                         ]),
                 Card::make()
                     ->schema([
-                        Forms\Components\Select::make('roles')
-                            ->multiple()
-                            ->relationship('roles', 'name')
+                        Forms\Components\Select::make('role')
+                            ->options(User::ROLES)
+                            ->default('USER'),
                         ])
             ]);
     }
@@ -93,6 +93,7 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

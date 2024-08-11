@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\TargetMeasurement;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class TargetMeasurementPolicy
 {
@@ -13,15 +13,15 @@ class TargetMeasurementPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any TargetMeasurement');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, TargetMeasurement $targetmeasurement): bool
+    public function view(User $user, TargetMeasurement $targetMeasurement): bool
     {
-        return $user->checkPermissionTo('view TargetMeasurement');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,38 +29,38 @@ class TargetMeasurementPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create TargetMeasurement');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, TargetMeasurement $targetmeasurement): bool
+    public function update(User $user, TargetMeasurement $targetMeasurement): bool
     {
-        return $user->checkPermissionTo('update TargetMeasurement');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, TargetMeasurement $targetmeasurement): bool
+    public function delete(User $user, TargetMeasurement $targetMeasurement): bool
     {
-        return $user->checkPermissionTo('delete TargetMeasurement');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, TargetMeasurement $targetmeasurement): bool
+    public function restore(User $user, TargetMeasurement $targetMeasurement): bool
     {
-        return $user->checkPermissionTo('restore TargetMeasurement');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, TargetMeasurement $targetmeasurement): bool
+    public function forceDelete(User $user, TargetMeasurement $targetMeasurement): bool
     {
-        return $user->checkPermissionTo('force-delete TargetMeasurement');
+        return $user->isSuperAdmin();
     }
 }

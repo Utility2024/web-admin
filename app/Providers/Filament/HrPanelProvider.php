@@ -20,6 +20,9 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HrPanelProvider extends PanelProvider
 {
@@ -31,7 +34,7 @@ class HrPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->brandName('HR Portal')
             ->navigationItems([
-                NavigationItem::make('Go To Home')
+                NavigationItem::make('Main Menu')
                     ->url('http://127.0.0.1:8000/admin')
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
@@ -57,8 +60,8 @@ class HrPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Hr/Widgets'), for: 'App\\Filament\\Hr\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\AccountWidget::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -70,7 +73,8 @@ class HrPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                \Hasnayeen\Themes\Http\Middleware\SetTheme::class
+                \Hasnayeen\Themes\Http\Middleware\SetTheme::class,
+                \App\Http\Middleware\CheckHrAccess::class,
             ])
             ->authMiddleware([
                 Authenticate::class,

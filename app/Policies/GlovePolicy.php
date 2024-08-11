@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\Glove;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class GlovePolicy
 {
@@ -13,7 +13,7 @@ class GlovePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Glove');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -21,7 +21,7 @@ class GlovePolicy
      */
     public function view(User $user, Glove $glove): bool
     {
-        return $user->checkPermissionTo('view Glove');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,7 +29,7 @@ class GlovePolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Glove');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -37,7 +37,7 @@ class GlovePolicy
      */
     public function update(User $user, Glove $glove): bool
     {
-        return $user->checkPermissionTo('update Glove');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
@@ -45,7 +45,7 @@ class GlovePolicy
      */
     public function delete(User $user, Glove $glove): bool
     {
-        return $user->checkPermissionTo('delete Glove');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -53,7 +53,7 @@ class GlovePolicy
      */
     public function restore(User $user, Glove $glove): bool
     {
-        return $user->checkPermissionTo('restore Glove');
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -61,6 +61,6 @@ class GlovePolicy
      */
     public function forceDelete(User $user, Glove $glove): bool
     {
-        return $user->checkPermissionTo('force-delete Glove');
+        return $user->isSuperAdmin();
     }
 }

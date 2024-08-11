@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\Material;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class MaterialPolicy
 {
@@ -13,7 +13,7 @@ class MaterialPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any Material');
+        return ! $user->isUser(); // Allow all roles except User
     }
 
     /**
@@ -21,7 +21,7 @@ class MaterialPolicy
      */
     public function view(User $user, Material $material): bool
     {
-        return $user->checkPermissionTo('view Material');
+        return ! $user->isUser(); // Allow all roles except User
     }
 
     /**
@@ -29,7 +29,7 @@ class MaterialPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create Material');
+        return ! $user->isUser(); // Allow all roles except User
     }
 
     /**
@@ -37,7 +37,7 @@ class MaterialPolicy
      */
     public function update(User $user, Material $material): bool
     {
-        return $user->checkPermissionTo('update Material');
+        return ! $user->isUser(); // Allow all roles except User
     }
 
     /**
@@ -45,7 +45,7 @@ class MaterialPolicy
      */
     public function delete(User $user, Material $material): bool
     {
-        return $user->checkPermissionTo('delete Material');
+        return $user->isSuperAdmin(); // Only SuperAdmin can delete
     }
 
     /**
@@ -53,7 +53,7 @@ class MaterialPolicy
      */
     public function restore(User $user, Material $material): bool
     {
-        return $user->checkPermissionTo('restore Material');
+        return ! $user->isUser(); // Allow all roles except User
     }
 
     /**
@@ -61,6 +61,6 @@ class MaterialPolicy
      */
     public function forceDelete(User $user, Material $material): bool
     {
-        return $user->checkPermissionTo('force-delete Material');
+        return $user->isSuperAdmin(); // Only SuperAdmin can permanently delete
     }
 }

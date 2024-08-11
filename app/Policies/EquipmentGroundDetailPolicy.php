@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\EquipmentGroundDetail;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class EquipmentGroundDetailPolicy
 {
@@ -13,15 +13,15 @@ class EquipmentGroundDetailPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any EquipmentGroundDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, EquipmentGroundDetail $equipmentgrounddetail): bool
+    public function view(User $user, EquipmentGroundDetail $equipmentGroundDetail): bool
     {
-        return $user->checkPermissionTo('view EquipmentGroundDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,38 +29,38 @@ class EquipmentGroundDetailPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create EquipmentGroundDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, EquipmentGroundDetail $equipmentgrounddetail): bool
+    public function update(User $user, EquipmentGroundDetail $equipmentGroundDetail): bool
     {
-        return $user->checkPermissionTo('update EquipmentGroundDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, EquipmentGroundDetail $equipmentgrounddetail): bool
+    public function delete(User $user, EquipmentGroundDetail $equipmentGroundDetail): bool
     {
-        return $user->checkPermissionTo('delete EquipmentGroundDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, EquipmentGroundDetail $equipmentgrounddetail): bool
+    public function restore(User $user, EquipmentGroundDetail $equipmentGroundDetail): bool
     {
-        return $user->checkPermissionTo('restore EquipmentGroundDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, EquipmentGroundDetail $equipmentgrounddetail): bool
+    public function forceDelete(User $user, EquipmentGroundDetail $equipmentGroundDetail): bool
     {
-        return $user->checkPermissionTo('force-delete EquipmentGroundDetail');
+        return $user->isSuperAdmin();
     }
 }

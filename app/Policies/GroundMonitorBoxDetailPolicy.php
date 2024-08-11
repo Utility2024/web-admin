@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\GroundMonitorBoxDetail;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class GroundMonitorBoxDetailPolicy
 {
@@ -13,15 +13,15 @@ class GroundMonitorBoxDetailPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any GroundMonitorBoxDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, GroundMonitorBoxDetail $groundmonitorboxdetail): bool
+    public function view(User $user, GroundMonitorBoxDetail $groundMonitorBoxDetail): bool
     {
-        return $user->checkPermissionTo('view GroundMonitorBoxDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
     }
 
     /**
@@ -29,38 +29,38 @@ class GroundMonitorBoxDetailPolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create GroundMonitorBoxDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, GroundMonitorBoxDetail $groundmonitorboxdetail): bool
+    public function update(User $user, GroundMonitorBoxDetail $groundMonitorBoxDetail): bool
     {
-        return $user->checkPermissionTo('update GroundMonitorBoxDetail');
+        return $user->isSuperAdmin() || $user->isAdminEsd();
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, GroundMonitorBoxDetail $groundmonitorboxdetail): bool
+    public function delete(User $user, GroundMonitorBoxDetail $groundMonitorBoxDetail): bool
     {
-        return $user->checkPermissionTo('delete GroundMonitorBoxDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, GroundMonitorBoxDetail $groundmonitorboxdetail): bool
+    public function restore(User $user, GroundMonitorBoxDetail $groundMonitorBoxDetail): bool
     {
-        return $user->checkPermissionTo('restore GroundMonitorBoxDetail');
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, GroundMonitorBoxDetail $groundmonitorboxdetail): bool
+    public function forceDelete(User $user, GroundMonitorBoxDetail $groundMonitorBoxDetail): bool
     {
-        return $user->checkPermissionTo('force-delete GroundMonitorBoxDetail');
+        return $user->isSuperAdmin();
     }
 }
