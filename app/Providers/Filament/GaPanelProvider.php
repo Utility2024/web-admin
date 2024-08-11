@@ -2,14 +2,19 @@
 
 namespace App\Providers\Filament;
 
+use Closure;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use Illuminate\Http\Request;
 use Filament\Pages\Dashboard;
 use Filament\Support\Colors\Color;
+use Illuminate\Support\Facades\Auth;
 use Filament\Navigation\NavigationItem;
+use Illuminate\Validation\Rules\Password;
 use Filament\Http\Middleware\Authenticate;
+use Jeffgreco13\FilamentBreezy\BreezyCore;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -20,9 +25,6 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class GaPanelProvider extends PanelProvider
 {
@@ -30,6 +32,7 @@ class GaPanelProvider extends PanelProvider
     {
         return $panel
             ->id('ga')
+            ->darkMode(false)
             ->path('ga')
             ->sidebarCollapsibleOnDesktop()
             ->brandName('GA Portal')
@@ -48,7 +51,23 @@ class GaPanelProvider extends PanelProvider
                 \Hasnayeen\Themes\ThemesPlugin::make()
             )
             ->plugins([
-                FilamentApexChartsPlugin::make()
+                FilamentApexChartsPlugin::make(),
+                BreezyCore::make()
+                    ->myProfile(
+                        shouldRegisterUserMenu: true, // Sets the 'account' link in the panel User Menu (default = true)
+                        shouldRegisterNavigation: false, // Adds a main navigation item for the My Profile page (default = false)
+                        navigationGroup: 'Settings', // Sets the navigation group for the My Profile page (default = null)
+                        hasAvatars: false, // Enables the avatar upload form component (default = false)
+                        slug: 'my-profile' // Sets the slug for the profile page (default = 'my-profile')
+                    )
+                    ->enableTwoFactorAuthentication(
+                        force: false, // force the user to enable 2FA before they can use the application (default = false)
+                        // action: CustomTwoFactorPage::class // optionally, use a custom 2FA page
+                    )
+                    // ->passwordUpdateRules(
+                    //     rules: [Password::default()->mixedCase()->uncompromised(3)], // you may pass an array of validation rules as well. (default = ['min:8'])
+                    //     requiresCurrentPassword: true, // when false, the user can update their password without entering their current password. (default = true)
+                    // )
             ])
             ->colors([
                 'primary' => Color::Amber,

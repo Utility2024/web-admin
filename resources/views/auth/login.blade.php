@@ -20,6 +20,8 @@
                 <!-- Sign In Form -->
                 <form method="POST" action="{{ route('login') }}" class="sign-in-form">
                     @csrf
+                    <img src="{{ url('images/logo_siix.png') }}" class="" alt="" width="180" height="100" />
+                    <hr>
                     <h2 class="title">Login</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
@@ -43,6 +45,8 @@
                 <!-- Sign Up Form -->
                 <form method="POST" action="{{ route('register') }}" class="sign-up-form">
                     @csrf
+                    <img src="{{ url('images/logo_siix.png') }}" class="" alt="" width="180" height="100" />
+                    <hr>
                     <h2 class="title">Register</h2>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
@@ -78,8 +82,8 @@
         <div class="panels-container">
             <div class="panel left-panel">
                 <div class="content">
-                    <h3>Welcome To Web Portal Admin</h3>
-                    <p>Belum Mempunyai Akun? Silahkan klik menu Register di bawah ini untuk mengakses Website.</p>
+                    <h3>Welcome To Web Portal Admin Dept.</h3>
+                    <p>Belum Mempunyai Akun? Silahkan klik tombol Sign Up di bawah ini untuk mengakses Website.</p>
                     <button class="btn transparent" id="sign-up-btn">
                         {{ __('Sign Up') }}
                     </button>
@@ -88,8 +92,8 @@
             </div>
             <div class="panel right-panel">
                 <div class="content">
-                    <h3>Sudah Mempunya Akun?</h3>
-                    <p>Silahkan klik tombol Login di bawah ini.</p>
+                    <h3>Sudah Mempunyai Akun?</h3>
+                    <p>Silahkan klik tombol Sign In di bawah ini.</p>
                     <button class="btn transparent" id="sign-in-btn">
                         {{ __('Sign In') }}
                     </button>

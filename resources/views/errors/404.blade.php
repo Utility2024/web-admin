@@ -1,143 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<html
+  lang="en"
+  class="light-style layout-wide"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path=""
+  data-template="vertical-menu-template-free"
+  data-style="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>404</title>
+    <title>404</title>
 
-  <style id="" media="all">
-    /* cyrillic-ext */
-    @font-face {
-      font-family: 'Montserrat';
-      font-style: normal;
-      font-weight: 900;
-      font-display: swap;
-      src: url(/fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCvC73w0aXpsog.woff2) format('woff2');
-      unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-    }
+    <meta name="description" content="" />
 
-    * {
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box
-    }
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet" />
 
-    body {
-      padding: 0;
-      margin: 0
-    }
+    <link rel="stylesheet" href="{{ url('vendor/fonts/boxicons.css') }}" />
 
-    #notfound {
-      position: relative;
-      height: 100vh
-    }
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{{ url('vendor/css/core.css') }}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ url('vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ url('css/demo.css') }}" />
 
-    #notfound .notfound {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%)
-    }
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{{ url('vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
-    .notfound {
-      max-width: 520px;
-      width: 100%;
-      line-height: 1.4;
-      text-align: center
-    }
+    <!-- Page CSS -->
+    <!-- Page -->
+    <link rel="stylesheet" href="{{ url('vendor/css/pages/page-misc.css') }}" />
 
-    .notfound .notfound-404 {
-      position: relative;
-      height: 240px
-    }
+    <!-- Helpers -->
+    <script src="{{ url('vendor/js/helpers.js') }}"></script>
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{{ url('js/config.js') }}"></script>
+  </head>
 
-    .notfound .notfound-404 h1 {
-      font-family: montserrat, sans-serif;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-      font-size: 252px;
-      font-weight: 900;
-      margin: 0;
-      color: #262626;
-      text-transform: uppercase;
-      letter-spacing: -40px;
-      margin-left: -20px
-    }
+  <body>
+    <!-- Content -->
 
-    .notfound .notfound-404 h1>span {
-      text-shadow: -8px 0 0 #fff
-    }
-
-    .notfound .notfound-404 h3 {
-      font-family: cabin, sans-serif;
-      position: relative;
-      font-size: 16px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #262626;
-      margin: 0;
-      letter-spacing: 3px;
-      padding-left: 6px
-    }
-
-    .notfound h2 {
-      font-family: cabin, sans-serif;
-      font-size: 20px;
-      font-weight: 400;
-      text-transform: uppercase;
-      color: #000;
-      margin-top: 0;
-      margin-bottom: 25px
-    }
-
-    @media only screen and (max-width: 767px) {
-      .notfound .notfound-404 {
-        height: 200px
-      }
-
-      .notfound .notfound-404 h1 {
-        font-size: 200px
-      }
-    }
-
-    @media only screen and (max-width: 480px) {
-      .notfound .notfound-404 {
-        height: 162px
-      }
-
-      .notfound .notfound-404 h1 {
-        font-size: 162px;
-        height: 150px;
-        line-height: 162px
-      }
-
-      .notfound h2 {
-        font-size: 16px
-      }
-    }
-  </style>
-  <meta name="robots" content="noindex, follow">
-</head>
-
-<body>
-  <div id="notfound">
-    <div class="notfound">
-      <div class="notfound-404">
-        <h3>Oops! Page not found</h3>
-        <h1><span>4</span><span>0</span><span>4</span></h1>
+    <!--Under Maintenance -->
+    <div class="container-xxl container-p-y">
+      <div class="misc-wrapper">
+        <h1 class="mb-2 mx-2">404</h1>
+        <p class="mb-6 mx-2">Maaf, halaman yang Anda minta tidak ada atau Anda tidak memiliki akses ke halaman ini</p>
+        <a href="http://127.0.0.1:8000/admin" class="btn btn-primary">Back to home</a>
+        <div class="mt-6">
+          <img
+            src="{{ url('images/404.png') }}"
+            alt="girl-doing-yoga-light"
+            width="500"
+            class="img-fluid"
+            data-app-light-img="maintenance.png"
+            data-app-dark-img="maintenance.png" />
+        </div>
       </div>
-      <h2>we are sorry, but the page you requested was not found</h2>
     </div>
-  </div>
-</body>
-</body>
+    <!-- /Under Maintenance -->
 
+    <!-- / Content -->
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+
+    <script src="{{ url('vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ url('vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ url('vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ url('vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+    <script src="{{ url('vendor/js/menu.js') }}"></script>
+
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <script src="{{ url('js/main.js') }}"></script>
+
+    <!-- Page JS -->
+
+    <!-- Place this tag before closing body tag for github widget button. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
 </html>
