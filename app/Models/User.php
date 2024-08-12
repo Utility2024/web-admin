@@ -24,6 +24,7 @@ class User extends Authenticatable
     const ROLE_ADMINUTILITY = 'ADMINUTILITY';
     const ROLE_ADMINHR = 'ADMINHR';
     const ROLE_ADMINGA = 'ADMINGA';
+    const ROLE_SECURITY = 'SECURITY';
     const ROLE_USER = 'USER';
 
     const ROLES = [
@@ -32,6 +33,7 @@ class User extends Authenticatable
         self::ROLE_ADMINUTILITY => 'Admin Utility',
         self::ROLE_ADMINHR => 'Admin HR',
         self::ROLE_ADMINGA => 'Admin GA',
+        self::ROLE_SECURITY => 'Security',
         self::ROLE_USER => 'User',
     ];
 
@@ -76,13 +78,13 @@ class User extends Authenticatable
             case 'esd':
                 return $this->role === self::ROLE_ADMINESD || self::ROLE_USER;
             case 'hr':
-                return $this->role === self::ROLE_ADMINHR;
+                return $this->role === self::ROLE_ADMINHR || self::ROLE_SECURITY;
             case 'ga':
                 return $this->role === self::ROLE_ADMINGA;
             case 'utility':
                 return $this->role === self::ROLE_ADMINUTILITY;
             case 'stock':
-                return !$this->role == self::ROLE_USER; // All roles except USER
+                return !$this->role == self::ROLE_USER || self::ROLE_SECURITY; // All roles except USER
             default:
                 return false;
         }
@@ -111,6 +113,11 @@ class User extends Authenticatable
     public function isAdminGa()
     {
         return $this->role === self::ROLE_ADMINGA;
+    }
+
+    public function isSecurity()
+    {
+        return $this->role === self::ROLE_SECURITY;
     }
 
     public function isUser()

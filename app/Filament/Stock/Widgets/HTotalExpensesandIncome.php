@@ -56,7 +56,7 @@ class HTotalExpensesandIncome extends ApexChartWidget
                 'type' => 'area',
             ],
             'dataLabels' => [
-                'enabled' => true,
+                'enabled' => false,
                 // 'formatter' => 'function(value, { seriesIndex, dataPointIndex, w }) {
                 //     return w.config.series[seriesIndex].name + ": " + value.toFixed(2);
                 // }',
@@ -68,7 +68,7 @@ class HTotalExpensesandIncome extends ApexChartWidget
                 'categories' => $months,
             ],
             'tooltip' => [
-                'enabled' => false, // Nonaktifkan tooltip
+                'enabled' => true, // Nonaktifkan tooltip
             ],
             'colors' => ['#10b981', '#dc2626'],
         ];

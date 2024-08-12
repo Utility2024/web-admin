@@ -14,7 +14,7 @@ class ComelateEmployeePolicy
     public function viewAny(User $user): bool
     {
         // Hanya SuperAdmin dan AdminHR yang bisa melihat semua model
-        return $user->isSuperAdmin() || $user->isAdminHr();
+        return $user->isSuperAdmin() || $user->isAdminHr() || $user->isSecurity();
     }
 
     /**
@@ -23,7 +23,7 @@ class ComelateEmployeePolicy
     public function view(User $user, ComelateEmployee $comelateEmployee): bool
     {
         // Hanya SuperAdmin dan AdminHR yang bisa melihat model tertentu
-        return $user->isSuperAdmin() || $user->isAdminHr();
+        return $user->isSuperAdmin() || $user->isAdminHr() || $user->isSecurity();
     }
 
     /**
@@ -32,7 +32,7 @@ class ComelateEmployeePolicy
     public function create(User $user): bool
     {
         // Hanya SuperAdmin dan AdminHR yang bisa membuat model
-        return $user->isSuperAdmin() || $user->isAdminHr();
+        return $user->isSuperAdmin() || $user->isAdminHr() || $user->isSecurity();
     }
 
     /**
@@ -41,7 +41,7 @@ class ComelateEmployeePolicy
     public function update(User $user, ComelateEmployee $comelateEmployee): bool
     {
         // Hanya SuperAdmin dan AdminHR yang bisa mengupdate model
-        return $user->isSuperAdmin() || $user->isAdminHr();
+        return $user->isSuperAdmin() || $user->isAdminHr() || $user->isSecurity();
     }
 
     /**
@@ -59,7 +59,7 @@ class ComelateEmployeePolicy
     public function restore(User $user, ComelateEmployee $comelateEmployee): bool
     {
         // Hanya SuperAdmin dan AdminHR yang bisa merestore model
-        return $user->isSuperAdmin() || $user->isAdminHr();
+        return $user->isSuperAdmin() || $user->isAdminHr() || $user->isSecurity();
     }
 
     /**

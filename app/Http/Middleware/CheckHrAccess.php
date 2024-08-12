@@ -20,7 +20,7 @@ class CheckHrAccess
         $user = Auth::user();
 
         // Check if user has access to 'esd' panel
-        if ($user && ($user->isAdminHr() || $user->isSuperadmin())) {
+        if ($user && ($user->isAdminHr() || $user->isSuperadmin() || $user->isSecurity())) {
             return $next($request);
         }
 

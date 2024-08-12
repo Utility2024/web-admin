@@ -18,15 +18,15 @@ class Ticketing extends BaseWidget
         if ($user->isAdminEsd() || $user->isSuperAdmin() || $user->isUser() ) {
             $stats[] = Stat::make('Electrostatic Discharge', 'ESD Portal')
                 ->description('Visit To Website')
-                ->url('http://127.0.0.1:8000/esd')
+                ->url('http://portal.siix-ems.co.id/esd')
                 ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
                 ->color('success');
         }
 
-        if ($user->isAdminHr() || $user->isSuperAdmin()) {
+        if ($user->isAdminHr() || $user->isSuperAdmin() || $user->isSecurity() ) {
             $stats[] = Stat::make('Human Resource', 'HR Portal')
                 ->description('Visit To Website')
-                ->url('http://127.0.0.1:8000/hr')
+                ->url('http://portal.siix-ems.co.id/hr')
                 ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
                 ->color('danger');
         }
@@ -34,7 +34,7 @@ class Ticketing extends BaseWidget
         if ($user->isAdminGa() || $user->isSuperAdmin()) {
             $stats[] = Stat::make('General Affair', 'GA Portal')
                 ->description('Visit To Website')
-                ->url('http://127.0.0.1:8000/ga')
+                ->url('http://portal.siix-ems.co.id/ga')
                 ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
                 ->color('warning');
         }
@@ -42,7 +42,7 @@ class Ticketing extends BaseWidget
         if ($user->isAdminUtility() || $user->isSuperAdmin()) {
             $stats[] = Stat::make('Utility And Facility', 'Utility Portal')
                 ->description('Visit To Website')
-                ->url('http://127.0.0.1:8000/utility')
+                ->url('http://portal.siix-ems.co.id/utility')
                 ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
                 ->color('info');
         }
@@ -50,7 +50,7 @@ class Ticketing extends BaseWidget
         if ($user->isAdminUtility() || $user->isAdminEsd() || $user->isAdminHr() || $user->isAdminGa() || $user->isSuperAdmin()) {
             $stats[] = Stat::make('Stock Control Material', 'Stock Material')
                 ->description('Visit To Website')
-                ->url('http://127.0.0.1:8000/stock')
+                ->url('http://portal.siix-ems.co.id/stock')
                 ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
                 ->color('info');
         }

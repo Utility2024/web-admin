@@ -34,7 +34,7 @@ class AUserTransaction extends ApexChartWidget
         return [
             'chart' => [
                 'type' => 'bar',
-                'height' => 365,
+                'height' => 300,
             ],
             'series' => [
                 [

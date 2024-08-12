@@ -12,6 +12,7 @@ use Filament\Pages\Dashboard;
 use Filament\Support\Colors\Color;
 use Illuminate\Support\Facades\Auth;
 use Filament\Navigation\NavigationItem;
+use App\Filament\Pages\Auth\EditProfile;
 use Illuminate\Validation\Rules\Password;
 use Filament\Http\Middleware\Authenticate;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
@@ -36,9 +37,10 @@ class UtilityPanelProvider extends PanelProvider
             ->path('utility')
             ->sidebarCollapsibleOnDesktop()
             ->brandName('Utility Portal')
+            // ->profile(EditProfile::class)
             ->navigationItems([
                 NavigationItem::make('Main Menu')
-                    ->url('http://127.0.0.1:8000')
+                    ->url('http://portal.siix-ems.co.id/admin')
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
                 NavigationItem::make('dashboard')
@@ -52,22 +54,6 @@ class UtilityPanelProvider extends PanelProvider
             )
             ->plugins([
                 FilamentApexChartsPlugin::make(),
-                BreezyCore::make()
-                    ->myProfile(
-                        shouldRegisterUserMenu: true, // Sets the 'account' link in the panel User Menu (default = true)
-                        shouldRegisterNavigation: false, // Adds a main navigation item for the My Profile page (default = false)
-                        navigationGroup: 'Settings', // Sets the navigation group for the My Profile page (default = null)
-                        hasAvatars: false, // Enables the avatar upload form component (default = false)
-                        slug: 'my-profile' // Sets the slug for the profile page (default = 'my-profile')
-                    )
-                    ->enableTwoFactorAuthentication(
-                        force: false, // force the user to enable 2FA before they can use the application (default = false)
-                        // action: CustomTwoFactorPage::class // optionally, use a custom 2FA page
-                    )
-                    // ->passwordUpdateRules(
-                    //     rules: [Password::default()->mixedCase()->uncompromised(3)], // you may pass an array of validation rules as well. (default = ['min:8'])
-                    //     requiresCurrentPassword: true, // when false, the user can update their password without entering their current password. (default = true)
-                    // )
             ])
             ->colors([
                 'primary' => Color::Amber,
