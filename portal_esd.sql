@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 11, 2024 at 01:15 PM
+-- Generation Time: Aug 16, 2024 at 10:04 AM
 -- Server version: 8.0.30
--- PHP Version: 8.3.7
+-- PHP Version: 8.3.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,8 +18,37 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `web-esd`
+-- Database: `portal_esd`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `breezy_sessions`
+--
+
+CREATE TABLE `breezy_sessions` (
+  `id` bigint UNSIGNED NOT NULL,
+  `authenticatable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `authenticatable_id` bigint UNSIGNED NOT NULL,
+  `panel_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `guard` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `two_factor_secret` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `two_factor_recovery_codes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `two_factor_confirmed_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `breezy_sessions`
+--
+
+INSERT INTO `breezy_sessions` (`id`, `authenticatable_type`, `authenticatable_id`, `panel_id`, `guard`, `ip_address`, `user_agent`, `expires_at`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `created_at`, `updated_at`) VALUES
+(1, 'App\\Models\\User', 1, NULL, NULL, NULL, NULL, NULL, 'eyJpdiI6Im5Jcm5YNGVnT25ON0NTS3VSSDZKR2c9PSIsInZhbHVlIjoiODJhSjZvSU0wZTJvUUZrR2x4SHVVUjNadnNaM3VrQTJYeGlVY1pNbVNmaz0iLCJtYWMiOiJkNzAxZWI4YWU5YzdmYTRkMzhmZmYyYzBmYzc1NzEwOWY1NGMxYTUzZmE3YTFjMGM5M2VlZDQ4NzdmMmI0MWM2IiwidGFnIjoiIn0=', 'eyJpdiI6ImVOc1NwdGpRY21kenZWNVIxNlhjSnc9PSIsInZhbHVlIjoicHBQdnA4VHlQN2FrZkU1MC91L0ZPcHhjWlAvTnJkV1ltYUpoTlZJKzBJcmxuREVTd1k0czNaS1UxT1hIRnE4bG5EVHJWRkpNVWt0QlNGNlpoM1RWTHFMenJ2emExU2RIR09ad3JMWUdiQUMzVXJGZlNuSnVuM0JzaFphU2pqcTZWY0xReWVqZlVUekM4SG1ySnBrMy9TSi9RT0hiVjRFcGRyRkpuVUM2K3FZbGFkZXlPR0x1OXdDMHpmT01OWFJpTkh4VjUwdmt6a2NjT04yZk1QeS9jcjVveVRLamFNbXBGc2NoWEovTDFrL3VOdU9FRkVvVnBrNnFlU2RoZ2prT1EvNFA0YmlRZ0pIUXQ1bkt2RmlsWHc9PSIsIm1hYyI6Ijk5Y2FkNjQ4NDUyMjhhYTdlOWFkYTc0YzRiMjVlN2Q1M2UxM2U2ZmYyZmRiZTY2ZDJlMzBlYjJhYWJjYjU5ZDIiLCJ0YWciOiIifQ==', '2024-08-11 05:14:15', '2024-08-11 05:13:49', '2024-08-11 05:14:26');
 
 -- --------------------------------------------------------
 
@@ -17907,37 +17936,41 @@ DELIMITER ;
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `two_factor_secret` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `two_factor_recovery_codes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `two_factor_confirmed_at` timestamp NULL DEFAULT NULL,
-  `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `lang` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en',
   `custom_fields` json DEFAULT NULL,
   `avatar_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `nik` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nik` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `theme` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'default',
-  `theme_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `theme_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'USER'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `role`, `remember_token`, `created_at`, `updated_at`, `lang`, `custom_fields`, `avatar_url`, `nik`, `theme`, `theme_color`) VALUES
-(1, 'Widi Fajar Satritama', 'widifajarsatritama@gmail.com', '2024-07-17 09:59:25', '$2y$12$fo49ZiQmAPM8U7PPkRWeZ.hTecQJUS6JtenQdRvm4YErLskxaEXnm', NULL, NULL, NULL, 'ADMIN', 'YxeunXWSBg6ltjsmlDZiPdLkJixDsUTIr5PgG6QDhIw5wzAhyAj39JwCDTx8', '2024-06-17 19:34:24', '2024-07-22 03:01:36', 'en', NULL, NULL, '22095652', 'default', NULL),
-(2, 'Guest', 'guest@gmail.com', NULL, '$2y$12$92g2mt.NCBVd9CQlAFJ8duB8ajQJK9OllkydOKdWVPCE32Fc.6GdW', NULL, NULL, NULL, 'USER', NULL, '2024-06-18 19:21:09', '2024-06-18 19:21:09', 'en', NULL, NULL, NULL, 'default', NULL),
-(3, 'Renata Arthaully', 'aga29604424@gmail.com', NULL, '$2y$12$rtPZo2zwEUbTLC/ulYZcZeHADyEYe2lcU153GsfPmVPoRrwGLkGoS', NULL, NULL, NULL, 'EDITOR', '9WrpqJspsItH8cZPugZiUqt5UNJDITXKY6CXhDLhg2S9J0j8YtINWtmIjMLD', '2024-07-17 02:51:16', '2024-07-17 19:29:58', 'en', NULL, NULL, '23035833', 'default', NULL),
-(4, 'Pratama Handika Rudiyanta', 'pratamarudiyanta@gmail.com', NULL, '$2y$12$KYd1JH3IHZsticKhe94Hd.yt/aR2J2YFH95/4eP4kaFvnS8RZ0KWS', NULL, NULL, NULL, 'USER', NULL, '2024-07-17 18:30:30', '2024-07-17 18:51:12', 'en', NULL, NULL, '23105984', 'default', NULL),
-(8, 'Ridwan Andriyanto', 'ridwan.andriyanto@siix-global.com', NULL, '$2y$12$S2EIx7pUcODttJPfwa4llOjTAGB3OcRZ/T08fAzqwyx9hb.q4b7k6', NULL, NULL, NULL, 'USER', NULL, '2024-07-17 19:41:28', '2024-07-17 19:41:28', 'en', NULL, NULL, '15052967', 'default', NULL),
-(9, 'Super Administrator', 'sek.utility@gmail.com', NULL, '$2y$12$fFo7CuGQkcybbwKatUWhYeeC8xn4tTS0httdQ6hawPjdOryl8s2hy', NULL, NULL, NULL, 'ADMIN', NULL, '2024-07-17 19:45:54', '2024-07-17 20:17:19', 'en', NULL, NULL, '0', 'default', NULL),
-(10, 'Heru Agus Kurniawanto', 'heru@gmail.com', NULL, '$2y$12$4YE41iQxwu4EJOc9BSwX1..p0RKuqzcG8jMmihsIBxOUEjWRejZFa', NULL, NULL, NULL, 'EDITOR', NULL, '2024-07-29 23:09:57', '2024-07-29 23:09:57', 'en', NULL, NULL, '20034748', 'default', NULL),
-(11, 'Tri', 'test@gmail.com', NULL, '$2y$12$7Mrqh8tKB1BjoGTA60aCpuh0KW6Yv4TYGt3ClxEljxs99QHm2pU6S', NULL, NULL, NULL, 'EDITOR', 'rf7z7UufAMAyTcYFgS4svUQLnUsSVGlTUdWCW50swAaRgKZ5E56IgjbGqqK8', '2024-07-30 00:05:18', '2024-07-30 00:05:18', 'en', NULL, NULL, '14051073', 'default', NULL);
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `created_at`, `updated_at`, `lang`, `custom_fields`, `avatar_url`, `nik`, `theme`, `theme_color`, `role`) VALUES
+(12, 'Tri Julia Agustin', 'admin@gmail.com', NULL, '$2y$12$VJNz7tcdfAZh08CBEr7bKOuixxJ9mxUUOvdRXgzfrcRLPCcD9c/4G', NULL, NULL, NULL, 'lOQ2wlUBT1rcCf86okpuMBvJrT0z3JgRS9VhJIfIfasHTtXQFxt8Xy77vseg', '2024-08-06 01:27:25', '2024-08-07 21:52:28', 'en', NULL, NULL, '14051073', 'default', NULL, 'ADMINHR'),
+(13, 'Pratama Handika Rudiyanta', NULL, NULL, '$2y$10$Fhd75Nh.CXXzVVxcHlMgZ.2TxMCEW7nQyg7jKRwXYIn6d0KWsfUqu', NULL, NULL, NULL, NULL, '2024-08-06 18:41:17', '2024-08-13 02:02:38', 'en', NULL, NULL, '23105984', 'default', NULL, 'USER'),
+(14, 'Renata Arthaully Christania Siagian', NULL, NULL, '$2y$10$gTWoIf6dwfgkrj22Q.k8m.5tqzesSAdLGOiOCLYc5cU2d4tWfnyLq', NULL, NULL, NULL, 'AfVRs9hXMsYfF84e8LyKpYZsSdBY8PgdPRAv4en2wC74NOYOo9g4XJs5dqe0', '2024-08-06 21:49:30', '2024-08-11 19:14:52', 'en', NULL, NULL, '23035833', 'default', NULL, 'ADMINGA'),
+(15, 'Oki Lesmana', NULL, NULL, '$2y$10$T.rZoDlu3CKJziUv51MEhe98zG64TKHVYiGqD/3RgzVfYqt5D.Jeu', NULL, NULL, NULL, NULL, '2024-08-06 22:25:39', '2024-08-11 19:15:08', 'en', NULL, NULL, '22105657', 'default', NULL, 'ADMINUTILITY'),
+(16, 'Heru Agus Kurniawanto', NULL, NULL, '$2y$10$7Y2VnqQwEm0kfswH4I7abeBXKPf24SnvJjWMpEWws/rYaQTRpidF6', NULL, NULL, NULL, NULL, '2024-08-06 22:26:34', '2024-08-11 19:15:31', 'en', NULL, NULL, '20034748', 'default', NULL, 'ADMINUTILITY'),
+(17, 'Wahyu', NULL, NULL, '$2y$10$cDJdqpnb5XM0IqFC.jznyONTc1A4lqTiziQqbCnmfgx061w4l8RoW', NULL, NULL, NULL, NULL, '2024-08-07 20:45:20', '2024-08-11 21:45:08', 'en', NULL, NULL, '20230062', 'default', NULL, 'SECURITY'),
+(20, 'Oki Lesmana', NULL, NULL, '$2y$10$Hdug6KZ8v5j3JwWlReIvZuv5p96z8bLK9gj/bgMpr.N98a2ee3e/u', NULL, NULL, NULL, NULL, '2024-08-11 01:13:12', '2024-08-11 18:24:19', 'en', NULL, NULL, '22105657', 'default', NULL, 'ADMINUTILITY'),
+(24, 'Widi Fajar Satritama', NULL, NULL, '$2y$10$nL8F9fdGk9fs8wvIeZnHVePBXD5VHTwsozcER9.0rUwQPq3vZp7Ou', NULL, NULL, NULL, NULL, '2024-08-11 18:10:24', '2024-08-12 23:07:00', 'en', NULL, NULL, '22095652', 'default', NULL, 'SUPERADMIN'),
+(25, 'Super Admin', NULL, NULL, '$2y$10$p09ZYp3eyZA3/H9qrtQpd.uW.8wliqVjPBMjGOf9t8hdxu3UsRhZa', NULL, NULL, NULL, NULL, '2024-08-11 18:24:50', '2024-08-11 18:24:50', 'en', NULL, NULL, '00', 'default', NULL, 'SUPERADMIN'),
+(26, 'Dwiki Arief Wicaksana', NULL, NULL, '$2y$10$y42HLQNC1wslIN8e7dbXYOSPaOUS09FEpQfip/AOeKE2coYQgLYy6', NULL, NULL, NULL, NULL, '2024-08-12 02:05:50', '2024-08-12 02:05:50', 'en', NULL, NULL, '23045859', 'default', NULL, 'USER'),
+(27, 'Ananda Fauziah', NULL, NULL, '$2y$10$ou91SZvSO8XarKuh.0ZQg.2mdKpl1wwlH1iFiVgjZqJ91.VyTmzDi', NULL, NULL, NULL, NULL, '2024-08-12 20:12:32', '2024-08-13 01:07:11', 'en', NULL, NULL, '24000152', 'default', NULL, 'ADMINGA'),
+(28, 'Dwi Kurniati', NULL, NULL, '$2y$10$MReSOvhFTE558tIPavMXKuQEdybfCgwEuBxuCwaYqGOz2bv1JZOFG', NULL, NULL, NULL, NULL, '2024-08-13 01:51:50', '2024-08-13 01:51:50', 'en', NULL, NULL, '18104196', 'default', NULL, 'ADMINGA');
 
 -- --------------------------------------------------------
 
@@ -22758,6 +22791,13 @@ INSERT INTO `worksurface_details` (`id`, `worksurface_id`, `area`, `location`, `
 --
 
 --
+-- Indexes for table `breezy_sessions`
+--
+ALTER TABLE `breezy_sessions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `breezy_sessions_authenticatable_type_authenticatable_id_index` (`authenticatable_type`,`authenticatable_id`);
+
+--
 -- Indexes for table `daily_patrols`
 --
 ALTER TABLE `daily_patrols`
@@ -22898,6 +22938,12 @@ ALTER TABLE `worksurface_details`
 --
 
 --
+-- AUTO_INCREMENT for table `breezy_sessions`
+--
+ALTER TABLE `breezy_sessions`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `daily_patrols`
 --
 ALTER TABLE `daily_patrols`
@@ -23009,7 +23055,7 @@ ALTER TABLE `target_measurements`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `worksurfaces`
