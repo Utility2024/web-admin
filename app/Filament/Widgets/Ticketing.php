@@ -16,32 +16,33 @@ class Ticketing extends BaseWidget
         $stats = [];
 
         if ($user->isAdminEsd() || $user->isSuperAdmin() || $user->isUser() ) {
-            $stats[] = Stat::make('Electrostatic Discharge', 'ESD Portal')
-                ->description('Visit To Website')
+            $stats[] = Stat::make('ESD', 'Electrostatic Discharge')
+                ->description('More Info')
                 ->url('http://portal.siix-ems.co.id/esd')
                 ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
                 ->color('success');
+                // ->columnSpan(1);
         }
 
         if ($user->isAdminHr() || $user->isSuperAdmin() || $user->isSecurity() ) {
-            $stats[] = Stat::make('Human Resource', 'HR Portal')
-                ->description('Visit To Website')
+            $stats[] = Stat::make('HR', 'Human Resource')
+                ->description('More Info')
                 ->url('http://portal.siix-ems.co.id/hr')
                 ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
                 ->color('danger');
         }
 
-        if ($user->isAdminGa() || $user->isSuperAdmin()) {
-            $stats[] = Stat::make('General Affair', 'GA Portal')
-                ->description('Visit To Website')
+        if ($user->isAdminGa() || $user->isSuperAdmin() || $user->isUser()) {
+            $stats[] = Stat::make('GA', 'General Affair')
+                ->description('More Info')
                 ->url('http://portal.siix-ems.co.id/ga')
                 ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
                 ->color('warning');
         }
 
         if ($user->isAdminUtility() || $user->isSuperAdmin()) {
-            $stats[] = Stat::make('Utility And Facility', 'Utility Portal')
-                ->description('Visit To Website')
+            $stats[] = Stat::make('Building', 'Utility And Facility')
+                ->description('More Info')
                 ->url('http://portal.siix-ems.co.id/utility')
                 ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
                 ->color('info');
@@ -49,7 +50,7 @@ class Ticketing extends BaseWidget
 
         if ($user->isAdminUtility() || $user->isAdminEsd() || $user->isAdminHr() || $user->isAdminGa() || $user->isSuperAdmin()) {
             $stats[] = Stat::make('Stock Control Material', 'Stock Material')
-                ->description('Visit To Website')
+                ->description('More Info')
                 ->url('http://portal.siix-ems.co.id/stock')
                 ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
                 ->color('info');

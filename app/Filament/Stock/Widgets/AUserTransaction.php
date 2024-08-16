@@ -7,6 +7,8 @@ use App\Filament\Stock\Resources\TransactionResource;
 
 class AUserTransaction extends ApexChartWidget
 {
+    protected int|string|array $columnSpan = 'full';
+
     /**
      * Chart Id
      *
@@ -34,7 +36,7 @@ class AUserTransaction extends ApexChartWidget
         return [
             'chart' => [
                 'type' => 'bar',
-                'height' => 300,
+                'height' => 400,
             ],
             'series' => [
                 [

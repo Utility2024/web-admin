@@ -70,17 +70,23 @@ class TransactionResource extends Resource
                     }),
                 Forms\Components\TextInput::make('description_id')
                     ->label('Description')
-                    ->required(),
+                    ->required()
+                    ->disabled()
+                    ->dehydrated(),
                 Forms\Components\TextInput::make('type')
                     ->label('Type')
-                    ->required(),
+                    ->required()
+                    ->disabled()
+                    ->dehydrated(),
                 Forms\Components\TextInput::make('last_stock')
                     ->label('Last Stock')
                     ->disabled(),
                 Forms\Components\TextInput::make('price')
                     ->label('Price')
                     ->numeric()
-                    ->prefix('IDR'), // Make price read-only
+                    ->prefix('IDR')
+                    ->disabled()
+                    ->dehydrated(), // Make price read-only
                 Forms\Components\ToggleButtons::make('transaction_type')
                     ->options([
                         'IN' => 'IN',

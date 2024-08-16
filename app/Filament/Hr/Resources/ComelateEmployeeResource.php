@@ -2,24 +2,31 @@
 
 namespace App\Filament\Hr\Resources;
 
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Employee;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Filament\Forms\Components\Select;
 use App\Models\ComelateEmployee;
-use Filament\Resources\Resource;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Hr\Resources\ComelateEmployeeResource\Pages;
-use App\Filament\Hr\Resources\ComelateEmployeeResource\RelationManagers;
 use Filament\Infolists\Infolist;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\Card as InfolistCard;
+use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
-use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Filters\Indicator;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TimePicker;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\ToggleButtons;
+use Filament\Infolists\Components\TextEntry;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Infolists\Components\Card as InfolistCard;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use App\Filament\Hr\Resources\ComelateEmployeeResource\Pages;
+use App\Filament\Hr\Resources\ComelateEmployeeResource\RelationManagers;
 
 class ComelateEmployeeResource extends Resource
 {
@@ -33,19 +40,67 @@ class ComelateEmployeeResource extends Resource
             ->schema([
                 Card::make()
                     ->schema([
-                        Forms\Components\TextInput::make('nik')
+                        Forms\Components\Select::make('nik')
                             ->label('NIK')
                             ->required()
-                            ->numeric(),
+                            ->searchable()
+                            ->reactive()
+                            ->options(function () {
+                                return Employee::query()
+                                    ->select('ID', 'user_login', 'Display_Name')
+                                    ->get()
+                                    ->mapWithKeys(function ($employee) {
+                                        return [
+                                            $employee->user_login => $employee->user_login . ' - ' . $employee->Display_Name
+                                        ];
+                                    });
+                            })
+                            ->afterStateUpdated(function (callable $set, $state) {
+                                // Temukan employee berdasarkan user_login
+                                $employee = Employee::query()->where('user_login', $state)->first();
+                                if ($employee) {
+                                    $set('name', $employee->Display_Name);
+                                    $set('department', $employee->Departement);
+                                } else {
+                                    $set('name', null);
+                                    $set('department', null);
+                                }
+                            }),
                         Forms\Components\TextInput::make('name')
                             ->label('Name')
-                            ->required(),
+                            ->required()
+                            ->disabled()
+                            ->dehydrated(),
                         Forms\Components\TextInput::make('department')
+                            ->label('Department')
                             ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('alasan_terlambat')
+                            ->disabled()
+                            ->dehydrated(),
+                        ToggleButtons::make('shift')
                             ->required()
-                            ->maxLength(255),
+                            ->options([
+                                'Non Shift' => 'Non Shift',
+                                'Non Shift (1)' => 'Non Shift (1)',
+                                'Shift 1' => 'Shift 1',
+                                'Shift 2' => 'Shift 2',
+                                'Shift 3' => 'Shift 3',
+                            ])
+                            ->colors([
+                                'draft' => 'info',
+                                'scheduled' => 'warning',
+                                'published' => 'success',
+                            ])
+                            ->inline(),
+                        Forms\Components\Select::make('alasan_terlambat')
+                            ->options([
+                                'Macet Lalulintas' => 'Macet Lalulintas',
+                                'Masalah Kendaraan' => 'Masalah Kendaraan',
+                                'Telat Berangkat' => 'Telat Berangkat',
+                                'Keperluan Pribadi' => 'Keperluan Pribadi',
+                                'Keperluan Keluarga' => 'Keperluan Keluarga',
+                                'Cuti Setengah Hari' => 'Cuti Setengah Hari'
+                            ])
+                            ->required(),
                         Forms\Components\TextInput::make('nama_security')
                             ->required()
                             ->maxLength(255),
@@ -63,6 +118,7 @@ class ComelateEmployeeResource extends Resource
                     TextEntry::make('nik'),
                     TextEntry::make('name'),
                     TextEntry::make('department'),
+                    TextEntry::make('shift'),
                     TextEntry::make('alasan_terlambat'),
                     TextEntry::make('nama_security'),
                     TextEntry::make('tanggal'),
@@ -76,9 +132,6 @@ class ComelateEmployeeResource extends Resource
     {
         return $table
             ->columns([
-                // Tables\Columns\TextColumn::make('row_number')
-                //     ->label('No.')
-                //     ->getStateUsing(fn ($rowLoop) => $rowLoop->iteration),
                 Tables\Columns\TextColumn::make('id')
                     ->label("No.")
                     ->sortable()
@@ -89,6 +142,8 @@ class ComelateEmployeeResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('department')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('shift')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('alasan_terlambat')
                     ->searchable(),
@@ -122,8 +177,83 @@ class ComelateEmployeeResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                //
-            ])
+                Filter::make('tanggal')
+                    ->form([
+                        Select::make('created_year')
+                            ->options([
+                                '2024' => '2024',
+                                '2023' => '2023',
+                                // Tambahkan tahun sesuai kebutuhan Anda
+                            ])
+                            ->placeholder('Pilih Tahun'),
+                        Select::make('created_month')
+                            ->options([
+                                '01' => 'Januari',
+                                '02' => 'Februari',
+                                '03' => 'Maret',
+                                '04' => 'April',
+                                '05' => 'Mei',
+                                '06' => 'Juni',
+                                '07' => 'Juli',
+                                '08' => 'Agustus',
+                                '09' => 'September',
+                                '10' => 'Oktober',
+                                '11' => 'November',
+                                '12' => 'Desember',
+                            ])
+                            ->placeholder('Pilih Bulan'),
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('tanggal', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('tanggal', '<=', $date),
+                            )
+                            ->when(
+                                $data['created_year'],
+                                fn (Builder $query, $year): Builder => $query->whereYear('tanggal', $year),
+                            )
+                            ->when(
+                                $data['created_month'],
+                                fn (Builder $query, $month): Builder => $query->whereMonth('tanggal', $month),
+                            );
+                    })
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+            
+                        if ($data['created_from'] ?? null) {
+                            $indicators[] = Indicator::make('Date From ' . Carbon::parse($data['created_from'])->toFormattedDateString())
+                                ->removeField('created_from');
+                        }
+            
+                        if ($data['created_until'] ?? null) {
+                            $indicators[] = Indicator::make('Date until ' . Carbon::parse($data['created_until'])->toFormattedDateString())
+                                ->removeField('created_until');
+                        }
+            
+                        if ($data['created_year'] ?? null) {
+                            $indicators[] = Indicator::make('Year ' . $data['created_year'])
+                                ->removeField('created_year');
+                        }
+            
+                        if ($data['created_month'] ?? null) {
+                            $indicators[] = Indicator::make('Month ' . Carbon::create(null, $data['created_month'])->format('F'))
+                                ->removeField('created_month');
+                        }
+            
+                        return $indicators;
+                    })
+            ])->filtersTriggerAction(
+                fn (Action $action) => $action
+                    ->button()
+                    ->label('Filter'),
+            )
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
