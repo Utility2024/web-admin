@@ -4,24 +4,39 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ComelateEmployee extends Model
 {
     use HasFactory;
 
+    // Menggunakan koneksi database 'mysql_hr'
     protected $connection = 'mysql_hr';
 
-    protected $fillable = ['nik', 'name', 'department', 'shift', 'alasan_terlambat', 'nama_security', 'tanggal', 'jam'];
+    // Daftar kolom yang dapat diisi
+    protected $fillable = [
+        'nik', 
+        'name', 
+        'department', 
+        'shift', 
+        'alasan_terlambat', 
+        'nama_security', 
+        'tanggal', 
+        'jam',
+        'created_by',
+        'updated_by'
+    ];
 
+    /**
+     * Relasi ke model User (pembuat)
+     */
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
     /**
-     * Get the user who last updated the transaction.
+     * Relasi ke model User (pengubah terakhir)
      */
     public function updater()
     {
@@ -29,7 +44,7 @@ class ComelateEmployee extends Model
     }
 
     /**
-     * Get the employee related to this record.
+     * Relasi ke model Employee
      */
     public function employee()
     {
@@ -37,18 +52,18 @@ class ComelateEmployee extends Model
     }
 
     /**
-     * Boot method to attach model events.
+     * Boot method untuk mengatur event pada model.
      */
     protected static function boot()
     {
         parent::boot();
 
-        // Set the creator on creating event
+        // Menentukan pembuat pada event creating
         static::creating(function ($model) {
             $model->created_by = Auth::id();
         });
 
-        // Set the updater on updating event
+        // Menentukan pengubah pada event updating
         static::updating(function ($model) {
             $model->updated_by = Auth::id();
         });

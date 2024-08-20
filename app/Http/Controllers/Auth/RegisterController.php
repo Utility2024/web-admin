@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller
 {
-    protected $redirectTo = '/admin'; // Ganti dengan rute tujuan setelah registrasi
+    protected $redirectTo = '/mainMenu'; // Ganti dengan rute tujuan setelah registrasi
 
     public function __construct()
     {

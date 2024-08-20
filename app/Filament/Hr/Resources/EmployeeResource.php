@@ -26,36 +26,6 @@ class EmployeeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    // public static function form(Form $form): Form
-    // {
-    //     return $form
-    //         ->schema([
-    //             Forms\Components\TextInput::make('ID')
-    //                 ->label('ID')
-    //                 ->disabled(),
-                
-    //             Forms\Components\TextInput::make('Departement')
-    //                 ->label('Department')
-    //                 ->disabled(),
-
-    //             Forms\Components\TextInput::make('display_name')
-    //                 ->label('Display Name')
-    //                 ->disabled(),
-
-    //             Forms\Components\TextInput::make('user_login')
-    //                 ->label('User Login')
-    //                 ->disabled(),
-
-    //             Forms\Components\TextInput::make('Last_Jobs')
-    //                 ->label('Last Job')
-    //                 ->disabled(),
-
-    //             Forms\Components\TextInput::make('Last_Route')
-    //                 ->label('Last Route')
-    //                 ->disabled(),
-    //         ]);
-    // }
-
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist
@@ -68,7 +38,6 @@ class EmployeeResource extends Resource
                     TextEntry::make('Departement'),
                     TextEntry::make('Last_Jobs'),
                     TextEntry::make('Last_Route'),
-                    // TextEntry::make('created_at'),
                 ])->columns(2),
             ]);
     }
@@ -102,18 +71,9 @@ class EmployeeResource extends Resource
                         ->label('Comelate Count')
                         ->badge()
                         ->color('primary')
-                        // ->sortable()
                         ->getStateUsing(function ($record) {
                             return ComelateEmployee::where('nik', $record->user_login)->count();
                         })
-                    
-                    
-
-                // Tables\Columns\TextColumn::make('Last_Jobs')
-                //     ->label('Last Job'),
-
-                // Tables\Columns\TextColumn::make('Last_Route')
-                //     ->label('Last Route'),
             ])
             ->filters([
                 //

@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    // Koneksi ke database mysql_employee
+    // Menggunakan koneksi database 'mysql_employee'
     protected $connection = 'mysql_employee';
 
-    // Nama view yang akan digunakan
-    protected $table = '_users'; // Ganti dengan nama view yang sesuai
+    // Nama view yang digunakan
+    protected $table = 'v_employee';
 
-    // Kolom yang akan diambil
+    // Kolom yang dapat diisi
     protected $fillable = [
         'ID',
         'Departement',
@@ -25,16 +25,18 @@ class Employee extends Model
     // Primary key
     protected $primaryKey = 'ID';
 
-    // Timestamps
+    // Menonaktifkan timestamps karena model ini menggunakan view
     public $timestamps = false;
 
-    // Definisi agar model ini bersifat read-only
+    // Membuat model ini bersifat read-only
     public function setAttribute($key, $value)
     {
         return null;
     }
 
-    // Relationship with ComelateEmployee
+    /**
+     * Relasi ke model ComelateEmployee
+     */
     public function comelateEmployees()
     {
         return $this->hasMany(ComelateEmployee::class, 'nik', 'user_login');

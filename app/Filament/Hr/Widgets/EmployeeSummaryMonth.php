@@ -4,6 +4,7 @@ namespace App\Filament\Hr\Widgets;
 
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 use App\Models\ComelateEmployee;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Select;
 use Carbon\Carbon;
@@ -52,6 +53,43 @@ class EmployeeSummaryMonth extends ApexChartWidget
      */
     protected function getOptions(): array
     {
+        // Get the currently authenticated user
+        $user = Auth::user();
+
+        // Check if the user has the 'SECURITY' role using the isSecurity() method
+        if ($user && $user->isSecurity()) {
+            // If the user has the 'SECURITY' role, return empty chart data
+            return [
+                'chart' => [
+                    'type' => 'bar',
+                    'height' => 300,
+                ],
+                'series' => [
+                    [
+                        'name' => 'Employee Summary',
+                        'data' => array_fill(0, 12, 0), // Fill with zeros for each month
+                    ],
+                ],
+                'xaxis' => [
+                    'categories' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    'labels' => [
+                        'style' => [
+                            'fontFamily' => 'inherit',
+                        ],
+                    ],
+                ],
+                'yaxis' => [
+                    'labels' => [
+                        'style' => [
+                            'fontFamily' => 'inherit',
+                        ],
+                    ],
+                ],
+                'colors' => ['#f59e0b'],
+            ];
+        }
+
+        // If the user does not have the 'SECURITY' role, show the chart
         $year = $this->filterFormData['year'] ?? Carbon::now()->year;
 
         // Fetch monthly data for the selected year
@@ -83,7 +121,7 @@ class EmployeeSummaryMonth extends ApexChartWidget
             ],
             'series' => [
                 [
-                    'name' => 'Employee Summary', // Fixed title for the series
+                    'name' => 'Employee Summary',
                     'data' => array_values($data),
                 ],
             ],

@@ -6,7 +6,7 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
-use Filament\Pages\Dashboard;
+use App\Filament\Pages\Dashboard;
 use Filament\Support\Colors\Color;
 use Filament\Navigation\NavigationItem;
 use App\Filament\Pages\Auth\EditProfile;
@@ -37,13 +37,6 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('3rem')
             ->sidebarCollapsibleOnDesktop()
             ->brandName('Admin Portal')
-            ->navigationItems([
-                NavigationItem::make('dashboard')
-                    ->label(fn (): string => __('filament-panels::pages/dashboard.title'))
-                    ->url(fn (): string => Dashboard::getUrl())
-                    ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.dashboard'))
-                    ->icon('heroicon-o-home')
-            ])
             ->id('admin')
             ->path('admin')
             // ->login()
@@ -52,7 +45,6 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
-            // ->authGuard('web')
             ->plugin(
                 \Hasnayeen\Themes\ThemesPlugin::make(),
                 FilamentSpatieRolesPermissionsPlugin::make(),

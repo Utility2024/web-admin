@@ -37,8 +37,6 @@ class GarmentResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'nik';
 
-
-
     public static function form(Form $form): Form
     {
         return $form

@@ -35,12 +35,15 @@ class EsdPanelProvider extends PanelProvider
             ->id('esd')
             ->darkMode(false)
             ->path('esd')
+            ->brandLogo(asset('images/logo_siix.png'))
+            ->favicon(asset('images/logo_siix.png'))
+            ->brandLogoHeight('3rem')
             // ->profile(EditProfile::class)
             ->sidebarCollapsibleOnDesktop()
             ->brandName('ESD Portal')
             ->navigationItems([
                 NavigationItem::make('Main Menu')
-                    ->url('http://portal.siix-ems.co.id/admin')
+                    ->url('http://portal.siix-ems.co.id/mainMenu')
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
                 NavigationItem::make('dashboard')

@@ -32,12 +32,15 @@ class StockPanelProvider extends PanelProvider
             ->id('stock')
             ->darkMode(false)
             ->path('stock')
+            ->brandLogo(asset('images/logo_siix.png'))
+            ->favicon(asset('images/logo_siix.png'))
+            ->brandLogoHeight('3rem')
             ->sidebarCollapsibleOnDesktop()
             ->brandName('Stock Control Material')
             // ->profile(EditProfile::class)
             ->navigationItems([
                 NavigationItem::make('Main Menu')
-                    ->url('http://portal.siix-ems.co.id/admin')
+                    ->url('http://portal.siix-ems.co.id/mainMenu')
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
                 NavigationItem::make('dashboard')

@@ -62,13 +62,13 @@ class DataFasilitasResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('register_no')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('qr_code')
-                    ->label('QR Code')
-                    ->html()
-                    ->getStateUsing(function ($record) {
-                        $qrCode = base64_encode(QrCode::format('svg')->size(100)->generate($record->register_no));
-                        return "<img src='data:image/svg+xml;base64,{$qrCode}' alt='QR Code' />";
-                    }),
+                // Tables\Columns\TextColumn::make('qr_code')
+                //     ->label('QR Code')
+                //     ->html()
+                //     ->getStateUsing(function ($record) {
+                //         $qrCode = base64_encode(QrCode::format('svg')->size(100)->generate($record->register_no));
+                //         return "<img src='data:image/svg+xml;base64,{$qrCode}' alt='QR Code' />";
+                //     }),
                 Tables\Columns\TextColumn::make('created_by')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),

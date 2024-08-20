@@ -4,6 +4,7 @@ namespace App\Filament\Hr\Widgets;
 
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 use App\Models\ComelateEmployee;
+use Illuminate\Support\Facades\Auth;
 
 class DepartmentSummary extends ApexChartWidget
 {
@@ -29,17 +30,38 @@ class DepartmentSummary extends ApexChartWidget
      */
     protected function getOptions(): array
     {
-        // Mengambil data department dan menghitung jumlah karyawan di setiap department
+        // Get the currently authenticated user
+        $user = Auth::user();
+
+        // Check if the user has the 'SECURITY' role using the isSecurity() method
+        if ($user && $user->isSecurity()) {
+            // If the user has the 'SECURITY' role, return empty chart data
+            return [
+                'chart' => [
+                    'type' => 'donut',
+                    'height' => 300,
+                ],
+                'series' => [],
+                'labels' => [],
+                'legend' => [
+                    'labels' => [
+                        'fontFamily' => 'inherit',
+                    ],
+                ],
+            ];
+        }
+
+        // If the user does not have the 'SECURITY' role, show the chart
         $departments = ComelateEmployee::select('department')
             ->selectRaw('count(*) as total')
             ->groupBy('department')
             ->get();
 
-        // Membuat series dan labels dari hasil query
+        // Create series and labels from the query results
         $series = $departments->pluck('total')->toArray();
         $labels = $departments->pluck('department')->toArray();
 
-        // Menggabungkan jumlah dan nama department untuk ditampilkan di label
+        // Combine department names and counts for labels
         $displayLabels = $departments->map(function ($department) {
             return $department->department . ' (' . $department->total . ')';
         })->toArray();

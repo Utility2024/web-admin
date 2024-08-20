@@ -2,59 +2,55 @@
 
 namespace App\Filament\Widgets;
 
-use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use App\Models\Ticket;
+use App\Models\Employee;
+use App\Models\DataFasilitas;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use Illuminate\Support\Facades\Auth;
+use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
 class Ticketing extends BaseWidget
 {
     protected function getStats(): array
     {
-        $user = Auth::user(); // Mengambil pengguna yang saat ini sedang login
+        // Menghitung total karyawan
+        $totalEmployee = Employee::count();
 
-        // Kontrol akses berdasarkan role pengguna
-        $stats = [];
+        $stats[] = Stat::make('Total Employee', $totalEmployee)
+            ->icon('heroicon-o-user-group')
+            ->description('More Info')
+            ->url('http://portal.siix-ems.co.id/hr/employees')
+            ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
+            ->color('warning');
 
-        if ($user->isAdminEsd() || $user->isSuperAdmin() || $user->isUser() ) {
-            $stats[] = Stat::make('ESD', 'Electrostatic Discharge')
-                ->description('More Info')
-                ->url('http://portal.siix-ems.co.id/esd')
-                ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
-                ->color('success');
-                // ->columnSpan(1);
-        }
+        // Menghitung total jobs dari sesi
+        $totalJobs = session('total_jobs', 0);
 
-        if ($user->isAdminHr() || $user->isSuperAdmin() || $user->isSecurity() ) {
-            $stats[] = Stat::make('HR', 'Human Resource')
-                ->description('More Info')
-                ->url('http://portal.siix-ems.co.id/hr')
-                ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
-                ->color('danger');
-        }
+        $stats[] = Stat::make('Total Jobs Akses', $totalJobs)
+            ->icon('heroicon-o-document-text')
+            ->description('More Info')
+            ->url('http://portal.siix-ems.co.id/admin/jobs')
+            ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
+            ->color('info');
 
-        if ($user->isAdminGa() || $user->isSuperAdmin() || $user->isUser()) {
-            $stats[] = Stat::make('GA', 'General Affair')
-                ->description('More Info')
-                ->url('http://portal.siix-ems.co.id/ga')
-                ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
-                ->color('warning');
-        }
+        // Menghitung total tiket dari model Ticket
+        $totalTickets = Ticket::count();
 
-        if ($user->isAdminUtility() || $user->isSuperAdmin()) {
-            $stats[] = Stat::make('Building', 'Utility And Facility')
-                ->description('More Info')
-                ->url('http://portal.siix-ems.co.id/utility')
-                ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
-                ->color('info');
-        }
+        $stats[] = Stat::make('Total Ticket', $totalTickets)
+            ->icon('heroicon-o-ticket')
+            ->description('More Info')
+            ->url('http://portal.siix-ems.co.id/admin/tickets')
+            ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
+            ->color('success');
 
-        if ($user->isAdminUtility() || $user->isAdminEsd() || $user->isAdminHr() || $user->isAdminGa() || $user->isSuperAdmin()) {
-            $stats[] = Stat::make('Stock Control Material', 'Stock Material')
-                ->description('More Info')
-                ->url('http://portal.siix-ems.co.id/stock')
-                ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
-                ->color('info');
-        }
+        // Menghitung total fasilitas dari model DataFasilitas
+        $totalFasilitas = DataFasilitas::count();
+
+        $stats[] = Stat::make('Total Assets', $totalFasilitas)
+            ->icon('heroicon-o-archive-box')
+            ->description('More Info')
+            ->url('http://portal.siix-ems.co.id/ga/')
+            ->descriptionIcon('heroicon-m-arrow-right-end-on-rectangle')
+            ->color('danger');
 
         return $stats;
     }

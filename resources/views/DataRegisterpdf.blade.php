@@ -24,6 +24,7 @@
             border: 1px solid #dddddd;
             padding: 6px; /* Padding lebih kecil */
             text-align: center; /* Teks di tengah */
+            vertical-align: middle; /* Konten vertikal di tengah */
         }
         th {
             background-color: #f2f2f2; /* Warna latar belakang abu-abu muda */
@@ -35,26 +36,31 @@
             font-weight: bold; /* Font tebal untuk nama kolom */
             background-color: #f2f2f2; /* Warna latar belakang abu-abu muda */
         }
+        .qr-code img {
+            display: block;
+            margin: 0 auto; /* Posisikan gambar di tengah */
+        }
     </style>
 </head>
 <body>
     <div class="content">
         <table>
             <tbody>
-                <tr class="header-row">
-                    <td>Register No</td>
-                    <td>QR Code</td>
-                </tr>
                 @foreach($records as $record)
-                <tr>
-                    <td>{{ $record->register_no }}</td>
-                    <td>
-                        @php
-                            $qrCode = base64_encode(QrCode::format('svg')->size(50)->generate($record->register_no));
-                        @endphp
-                        <img src="data:image/svg+xml;base64,{{ $qrCode }}" alt="QR Code" />
-                    </td>
-                </tr>
+                    <tr class="header-row">
+                        <td>Register No</td>
+                        <td>QR Code For Request</td>
+                    </tr>
+                    <tr>
+                        <td>{{ $record->register_no }}</td>
+                        <td class="qr-code">
+                            @php
+                                // Generate QR code yang berisi link Google Form
+                                $qrCode = base64_encode(QrCode::format('svg')->size(50)->generate('https://docs.google.com/forms/d/e/1FAIpQLSdMSFw74oQVylyaa3Qlae-hDXgi5K3Xg2pKlo-ok_xOj-uPGg/viewform'));
+                            @endphp
+                            <img src="data:image/svg+xml;base64,{{ $qrCode }}" alt="QR Code" />
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

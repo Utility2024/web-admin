@@ -35,12 +35,15 @@ class UtilityPanelProvider extends PanelProvider
             ->id('utility')
             ->darkMode(false)
             ->path('utility')
+            ->brandLogo(asset('images/logo_siix.png'))
+            ->favicon(asset('images/logo_siix.png'))
+            ->brandLogoHeight('3rem')
             ->sidebarCollapsibleOnDesktop()
             ->brandName('Utility Portal')
             // ->profile(EditProfile::class)
             ->navigationItems([
                 NavigationItem::make('Main Menu')
-                    ->url('http://portal.siix-ems.co.id/admin')
+                    ->url('http://portal.siix-ems.co.id/mainMenu')
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
                 NavigationItem::make('dashboard')

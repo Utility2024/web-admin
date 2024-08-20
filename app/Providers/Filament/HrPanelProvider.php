@@ -35,19 +35,17 @@ class HrPanelProvider extends PanelProvider
             ->id('hr')
             ->darkMode(false)
             ->path('hr')
+            ->brandLogo(asset('images/logo_siix.png'))
+            ->favicon(asset('images/logo_siix.png'))
+            ->brandLogoHeight('3rem')
             ->sidebarCollapsibleOnDesktop()
             ->brandName('HR Portal')
             // ->profile(EditProfile::class)
             ->navigationItems([
                 NavigationItem::make('Main Menu')
-                    ->url('http://portal.siix-ems.co.id/admin')
+                    ->url('http://portal.siix-ems.co.id/mainMenu')
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
-                NavigationItem::make('dashboard')
-                    ->label(fn (): string => __('filament-panels::pages/dashboard.title'))
-                    ->url(fn (): string => Dashboard::getUrl())
-                    ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.dashboard'))
-                    ->icon('heroicon-o-home'),
             ])
             ->plugin(
                 \Hasnayeen\Themes\ThemesPlugin::make(),
@@ -65,8 +63,7 @@ class HrPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Hr/Widgets'), for: 'App\\Filament\\Hr\\Widgets')
             ->widgets([
-                // Widgets\AccountWidget::class,
-                // Widgets\FilamentInfoWidget::class,
+                //
             ])
             ->middleware([
                 EncryptCookies::class,
