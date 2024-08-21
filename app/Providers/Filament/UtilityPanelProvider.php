@@ -46,11 +46,6 @@ class UtilityPanelProvider extends PanelProvider
                     ->url('http://portal.siix-ems.co.id/mainMenu')
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
-                NavigationItem::make('dashboard')
-                    ->label(fn (): string => __('filament-panels::pages/dashboard.title'))
-                    ->url(fn (): string => Dashboard::getUrl())
-                    ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.dashboard'))
-                    ->icon('heroicon-o-home'),
             ])
             ->plugin(
                 \Hasnayeen\Themes\ThemesPlugin::make()

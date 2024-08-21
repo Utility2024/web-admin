@@ -19,6 +19,7 @@ use App\Filament\Hr\Resources\EmployeeResource\Pages;
 use Filament\Infolists\Components\Card as InfolistCard;
 use App\Filament\Hr\Resources\EmployeeResource\RelationManagers;
 use App\Filament\Hr\Resources\EmployeeResource\RelationManagers\ComelateEmployeesRelationManager;
+use Filament\Tables\Actions\Action;
 
 class EmployeeResource extends Resource
 {
@@ -76,8 +77,36 @@ class EmployeeResource extends Resource
                         })
             ])
             ->filters([
-                //
-            ])
+                SelectFilter::make('Departement')
+                    ->options([
+                        'ACCOUNTING' => 'ACCOUNTING',
+                        'ADMIN' => 'ADMIN',
+                        'COSTING INVENTORY' => 'COSTING INVENTORY',
+                        'DCC' => 'DCC',
+                        'EXIM' => 'EXIM',
+                        'FG' => 'FG',
+                        'INNOVATION' => 'INNOVATION',
+                        'IT' => 'IT',
+                        'MARKETING' => 'MARKETING',
+                        'NPI' => 'NPI',
+                        'OS' => 'OS',
+                        'PPC' => 'PPC',
+                        'PROD.1' => 'PROD.1',
+                        'PROD.2' => 'PROD.2',
+                        'PURCHASING' => 'PURCHASING',
+                        'QA/QC' => 'QA/QC',
+                        'TOOLING/IMPROVEMENT' => 'TOOLING/IMPROVEMENT',
+                        'TRAINING' => 'TRAINING',
+                        'VISITOR' => 'VISITOR',
+                        'WAREHOUSE' => 'WAREHOUSE'
+                    ])
+                    ->attribute('Departement')
+                    ->preload()
+            ])->filtersTriggerAction(
+                fn (Action $action) => $action
+                    ->button()
+                    ->label('Filter')
+            )
             ->actions([
                 Tables\Actions\ViewAction::make(),
             ])

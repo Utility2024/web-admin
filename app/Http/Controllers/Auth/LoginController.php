@@ -28,7 +28,7 @@ class LoginController extends Controller
         // Coba autentikasi
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             // Autentikasi berhasil, arahkan ke halaman yang diinginkan
-            return redirect()->intended('admin');
+            return redirect()->intended('mainMenu');
         }
 
         // Autentikasi gagal, tampilkan pesan kesalahan

@@ -6,7 +6,7 @@
         @endphp
 
         <!-- Card 1: Electrostatic Discharge -->
-        @if ($user->isAdminEsd() || $user->isSuperAdmin() || $user->isUser())
+        @if ($user->isAdminEsd() || $user->isSuperAdmin() || $user->isUser() || $user->isAdminHr() || $user->isAdminHr() || $user->isAdminGa() || $user->isAdminUtility())
             @php $totalJobs++; @endphp
             <x-filament::card class="max-w-sm">
                 <div class="relative">
@@ -29,7 +29,7 @@
         @endif
 
         <!-- Card 2: Human Resource -->
-        @if ($user->isAdminHr() || $user->isSuperAdmin() || $user->isSecurity() )
+        @if ($user->isAdminEsd() || $user->isSuperAdmin() || $user->isUser() || $user->isAdminHr() || $user->isAdminHr() || $user->isAdminGa() || $user->isAdminUtility())
             @php $totalJobs++; @endphp
             <x-filament::card class="max-w-sm">
                 <div class="relative">

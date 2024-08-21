@@ -98,7 +98,6 @@ class ComelateEmployeeResource extends Resource
                                 'Telat Berangkat' => 'Telat Berangkat',
                                 'Keperluan Pribadi' => 'Keperluan Pribadi',
                                 'Keperluan Keluarga' => 'Keperluan Keluarga',
-                                'Cuti Setengah Hari' => 'Cuti Setengah Hari'
                             ])
                             ->required(),
                         Forms\Components\TextInput::make('nama_security')
