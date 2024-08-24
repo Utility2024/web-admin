@@ -40,10 +40,10 @@ class HrPanelProvider extends PanelProvider
             ->brandLogoHeight('3rem')
             ->sidebarCollapsibleOnDesktop()
             ->brandName('HR Portal')
-            // ->profile(EditProfile::class)
+            ->profile(EditProfile::class)
             ->navigationItems([
                 NavigationItem::make('Main Menu')
-                    ->url('http://portal.siix-ems.co.id/mainMenu')
+                    ->url('http://127.0.0.1:8000/mainMenu')
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
             ])

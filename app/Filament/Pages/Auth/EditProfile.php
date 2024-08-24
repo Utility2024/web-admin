@@ -17,8 +17,12 @@ class EditProfile extends BaseEditProfile
                     ->required()
                     ->numeric(),
                 $this->getNameFormComponent(),
-                // $this->getEmailFormComponent(),
-                $this->getPasswordFormComponent(),
+                $this->getEmailFormComponent(),
+                TextInput::make('password')
+                    ->password()
+                    ->required()
+                    ->maxLength(255),
+                // $this->getPasswordFormComponent(),
                 $this->getPasswordConfirmationFormComponent(),
             ]);
     }

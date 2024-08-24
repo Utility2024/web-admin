@@ -11,6 +11,18 @@
             color: #f56565;
             font-size: 0.875rem; /* Optional: adjust font size */
         }
+
+        .forgot-password {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.875rem;
+            color: #1d4ed8;
+            text-decoration: none;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -37,6 +49,12 @@
                     @error('password')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
+
+                    <!-- Tambahkan link Forgot Password di sini -->
+                    <a href="{{ route('password.request') }}" class="forgot-password">
+                        {{ __('Forgot Password?') }}
+                    </a>
+
                     <x-button class="btn solid">
                         {{ __('Sign In') }}
                     </x-button>

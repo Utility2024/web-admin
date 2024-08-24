@@ -19,7 +19,7 @@
                     </p>
                     <x-filament::button 
                         tag="a" 
-                        href="http://portal.siix-ems.co.id/ticket" 
+                        href="http://127.0.0.1:8000/ticket" 
                         class="mt-4"
                     >
                         More Info
@@ -42,7 +42,7 @@
                     </p>
                     <x-filament::button 
                         tag="a" 
-                        href="http://portal.siix-ems.co.id/jobs" 
+                        href="http://127.0.0.1:8000/jobs" 
                         class="mt-4"
                     >
                         More Info
