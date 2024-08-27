@@ -44,7 +44,7 @@ class PasswordResetController extends Controller
             function ($user) use ($request) {
                 // Update password user
                 $user->forceFill([
-                    'password' => Hash::make($request->password),
+                    'password' => $request->password,
                 ])->save();
 
                 // Log in the user after resetting the password
