@@ -5,6 +5,7 @@ namespace App\Filament\Esd\Resources\FlooringDetailResource\Pages;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use App\Filament\Esd\Resources\FlooringDetailResource;
+use App\Filament\Esd\Resources\FlooringDetailResource\Widgets\StandartFlooring;
 use App\Filament\Esd\Resources\FlooringDetailResource\Widgets\FlooringDetailStatsOverview;
 
 class ListFlooringDetails extends ListRecords
@@ -21,7 +22,8 @@ class ListFlooringDetails extends ListRecords
     protected function getHeaderWidgets(): array
     {
         return [
-            FlooringDetailStatsOverview::class,
+            // FlooringDetailStatsOverview::class,
+            StandartFlooring::class,
         ];
     }
 }

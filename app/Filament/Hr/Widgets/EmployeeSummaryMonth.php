@@ -23,7 +23,7 @@ class EmployeeSummaryMonth extends ApexChartWidget
      *
      * @var string|null
      */
-    protected static ?string $heading = 'Employee Comelate Summary Per-Month';
+    protected static ?string $heading = 'Monthly Employee Comming Late';
 
     /**
      * Form schema for filters

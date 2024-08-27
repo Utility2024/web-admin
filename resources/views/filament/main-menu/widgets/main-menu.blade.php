@@ -5,31 +5,8 @@
             $totalJobs = 0; // Variabel untuk menghitung jumlah total card yang ditampilkan
         @endphp
 
-        <!-- Card 1: Electrostatic Discharge -->
-        @if ($user->isAdminEsd() || $user->isSuperAdmin() || $user->isUser() || $user->isAdminHr() || $user->isAdminHr() || $user->isAdminGa() || $user->isAdminUtility())
-            @php $totalJobs++; @endphp
-            <x-filament::card class="max-w-sm">
-                <div class="relative">
-                    <img class="w-full h-48 object-cover aspect-square" src="{{ url('images/ticket.png') }}" alt="ESD Portal" />
-                </div>
-                <div class="space-y-2">
-                    <h5 class="text-lg font-bold">Ticketing</h5>
-                    <p class="text-gray-600">
-                        Make & take a ticket for work operational problem or request
-                    </p>
-                    <x-filament::button 
-                        tag="a" 
-                        href="http://portal.siix-ems.co.id/ticket" 
-                        class="mt-4"
-                    >
-                        More Info
-                    </x-filament::button>
-                </div>
-            </x-filament::card>
-        @endif
-
         <!-- Card 2: Human Resource -->
-        @if ($user->isAdminEsd() || $user->isSuperAdmin() || $user->isUser() || $user->isAdminHr() || $user->isAdminHr() || $user->isAdminGa() || $user->isAdminUtility())
+        @if ($user->isAdminEsd() || $user->isSuperAdmin() || $user->isUser() || $user->isAdminHr() || $user->isAdminHr() || $user->isAdminGa() || $user->isAdminUtility() || $user->isSecurity() )
             @php $totalJobs++; @endphp
             <x-filament::card class="max-w-sm">
                 <div class="relative">
@@ -49,7 +26,38 @@
                     </x-filament::button>
                 </div>
             </x-filament::card>
-        @endif  
+        @endif
+
+        <!-- Card 1: Electrostatic Discharge -->
+        @if ($user->isAdminEsd() || $user->isSuperAdmin() || $user->isUser() || $user->isAdminHr() || $user->isAdminHr() || $user->isAdminGa() || $user->isAdminUtility() || $user->isSecurity() )
+            @php $totalJobs++; @endphp
+            <x-filament::card class="max-w-sm">
+                <div class="relative">
+                    <img class="w-full h-48 object-cover aspect-square" src="{{ url('images/ticket.png') }}" alt="ESD Portal" />
+                </div>
+                <div class="space-y-2">
+                    <h5 class="text-lg font-bold">Ticketing</h5>
+                    <p class="text-gray-600">
+                        Cooming Soon
+                    </p>
+                </div>
+            </x-filament::card>
+        @endif
+        
+        @if ($user->isAdminEsd() || $user->isSuperAdmin() || $user->isUser() || $user->isAdminHr() || $user->isAdminHr() || $user->isAdminGa() || $user->isAdminUtility() || $user->isSecurity() )
+            @php $totalJobs++; @endphp
+            <x-filament::card class="max-w-sm">
+                <div class="relative">
+                    <img class="w-full h-48 object-cover aspect-square" src="{{ url('images/form.png') }}" alt="HR Portal" />
+                </div>
+                <div class="space-y-2">
+                    <h5 class="text-lg font-bold">All Form Application</h5>
+                    <p class="text-gray-600">
+                        Coming Soon
+                    </p>
+                </div>
+            </x-filament::card>
+        @endif
 
         @php
             // Simpan total jobs ke dalam sesi

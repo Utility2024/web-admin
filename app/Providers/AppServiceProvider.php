@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use Filament\Panel;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-use Filament\Panel;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Contracts\View\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,5 +34,10 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
         });
+
+        // FilamentView::registerRenderHook(
+        //     PanelsRenderHook::FOOTER,
+        //     fn (): View => view('footer'),
+        // );
     }
 }

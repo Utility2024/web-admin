@@ -11,6 +11,18 @@
             color: #f56565;
             font-size: 0.875rem; /* Optional: adjust font size */
         }
+
+        .forgot-password {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.875rem;
+            color: #1d4ed8;
+            text-decoration: none;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -37,6 +49,12 @@
                     @error('password')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
+
+                    <!-- Tambahkan link Forgot Password di sini -->
+                    <a href="{{ route('password.request') }}" class="forgot-password">
+                        {{ __('Forgot Password?') }}
+                    </a>
+
                     <x-button class="btn solid">
                         {{ __('Sign In') }}
                     </x-button>
@@ -48,8 +66,14 @@
                     <img src="{{ url('images/logo_siix.png') }}" class="" alt="" width="180" height="100" />
                     <hr>
                     <h2 class="title">Register</h2>
+
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
+                        <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" placeholder="Email" required />
+                    </div>
+
+                    <div class="input-field">
+                        <i class="fas fa-id-card"></i>
                         <x-input id="nik" class="block mt-1 w-full" type="number" name="nik" :value="old('nik')" placeholder="NIK" required />
                     </div>
                     
@@ -57,7 +81,7 @@
                         <i class="fas fa-user"></i>
                         <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" placeholder="Name" required autofocus autocomplete="name" />
                     </div>
-                   
+
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
                         <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" placeholder="Password" />
@@ -66,6 +90,9 @@
                         <i class="fas fa-lock"></i>
                         <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password" />
                     </div>
+                    @error('email')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
                     @error('nik')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror

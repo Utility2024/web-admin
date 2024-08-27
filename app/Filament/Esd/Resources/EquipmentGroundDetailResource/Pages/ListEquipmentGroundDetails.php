@@ -9,6 +9,7 @@ use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use EightyNine\ExcelImport\ExcelImportAction;
 use App\Filament\Esd\Resources\EquipmentGroundDetailResource;
+use App\Filament\Esd\Resources\EquipmentGroundDetailResource\Widgets\StandartEquipmentGround;
 use App\Filament\Esd\Resources\EquipmentGroundDetailResource\Widgets\EquipmentGroundDetailStatsOverview;
 
 class ListEquipmentGroundDetails extends ListRecords
@@ -27,7 +28,8 @@ class ListEquipmentGroundDetails extends ListRecords
     protected function getHeaderWidgets(): array
     {
         return [
-            EquipmentGroundDetailStatsOverview::class,
+            // EquipmentGroundDetailStatsOverview::class,
+            StandartEquipmentGround::class,
         ];
     }
 

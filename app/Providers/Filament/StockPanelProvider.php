@@ -39,8 +39,8 @@ class StockPanelProvider extends PanelProvider
             ->brandName('Stock Control Material')
             // ->profile(EditProfile::class)
             ->navigationItems([
-                NavigationItem::make('Main Menu')
-                    ->url('http://portal.siix-ems.co.id/mainMenu')
+                NavigationItem::make('Back')
+                    ->url('http://portal.siix-ems.co.id/jobs')
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
                 NavigationItem::make('dashboard')

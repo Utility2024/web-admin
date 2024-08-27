@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glove</title>
+    <title>Asset</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -56,7 +56,7 @@
                         <td class="qr-code">
                             @php
                                 // Generate QR code yang berisi link Google Form
-                                $qrCode = base64_encode(QrCode::format('svg')->size(50)->generate('https://docs.google.com/forms/d/e/1FAIpQLSdMSFw74oQVylyaa3Qlae-hDXgi5K3Xg2pKlo-ok_xOj-uPGg/viewform'));
+                                $qrCode = base64_encode(QrCode::format('svg')->size(50)->generate('bit.ly/request_assets'));
                             @endphp
                             <img src="data:image/svg+xml;base64,{{ $qrCode }}" alt="QR Code" />
                         </td>

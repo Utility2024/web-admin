@@ -23,7 +23,7 @@ class ASummaryComelate extends BaseWidget
 
         // If the user does not have the 'SECURITY' role, show the stats
         $totalComelate = ComelateEmployee::count();
-        $totalDepartments = ComelateEmployee::distinct('department')->count('department');
+        $totalDepartments = Employee::distinct('Departement')->count('Departement');
         $totalEmployee = Employee::count();
 
         return [

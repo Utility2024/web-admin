@@ -257,7 +257,7 @@ class TransactionResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->defaultSort('id', 'desc')
+            ->defaultSort('date', 'desc')
             ->filters([
                 SelectFilter::make('material_id')
                     ->label('SAP Code')

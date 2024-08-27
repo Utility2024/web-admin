@@ -27,6 +27,7 @@ use Filament\Infolists\Components\Card as InfolistCard;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Filament\Hr\Resources\ComelateEmployeeResource\Pages;
 use App\Filament\Hr\Resources\ComelateEmployeeResource\RelationManagers;
+use Filament\Resources\Components\Tab;
 
 class ComelateEmployeeResource extends Resource
 {
@@ -80,7 +81,6 @@ class ComelateEmployeeResource extends Resource
                             ->required()
                             ->options([
                                 'Non Shift' => 'Non Shift',
-                                'Non Shift (1)' => 'Non Shift (1)',
                                 'Shift 1' => 'Shift 1',
                                 'Shift 2' => 'Shift 2',
                                 'Shift 3' => 'Shift 3',
@@ -279,6 +279,34 @@ class ComelateEmployeeResource extends Resource
             'create' => Pages\CreateComelateEmployee::route('/create'),
             'view' => Pages\ViewComelateEmployee::route('/{record}'),
             'edit' => Pages\EditComelateEmployee::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getTabs(): array
+    {
+        return [
+            'All' => Tab::make(),
+            'Macet Lalulintas' => Tab::make()
+                ->modifyQueryUsing(function (Builder $query) {
+                    $query->where('alasan_terlambat', 'Macet Lalulintas');
+                }),
+            'Masalah Kendaraan' => Tab::make()
+                ->modifyQueryUsing(function (Builder $query) {
+                    $query->where('alasan_terlambat', 'Masalah Kendaraan');
+                }),
+            'Telat Berangkat' => Tab::make()
+                ->modifyQueryUsing(function (Builder $query) {
+                    $query->where('alasan_terlambat', 'Telat Berangkat');
+                }),
+            'Keperluan Pribadi' => Tab::make()
+                ->modifyQueryUsing(function (Builder $query) {
+                    $query->where('alasan_terlambat', 'Keperluan Pribadi');
+                }),
+            'Keperluan Keluarga' => Tab::make()
+                ->modifyQueryUsing(function (Builder $query) {
+                    $query->where('alasan_terlambat', 'Keperluan Keluarga');
+                }),
+
         ];
     }
 }

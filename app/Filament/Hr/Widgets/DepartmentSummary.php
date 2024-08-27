@@ -69,7 +69,7 @@ class DepartmentSummary extends ApexChartWidget
         return [
             'chart' => [
                 'type' => 'donut',
-                'height' => 300,
+                'height' => 325,
             ],
             'series' => $series,
             'labels' => $displayLabels,

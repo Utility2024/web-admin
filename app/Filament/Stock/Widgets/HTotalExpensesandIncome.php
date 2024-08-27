@@ -22,7 +22,7 @@ class HTotalExpensesandIncome extends ApexChartWidget
      *
      * @var string|null
      */
-    protected static ?string $heading = 'Pengeluaran dan Pendapatan';
+    protected static ?string $heading = 'Income and Expence';
 
     /**
      * Opsi Grafik (serangkaian data, label, tipe, ukuran, animasi...)
@@ -43,11 +43,11 @@ class HTotalExpensesandIncome extends ApexChartWidget
         return [
             'series' => [
                 [
-                    'name' => 'Total Pendapatan',
+                    'name' => 'Total Income',
                     'data' => $totalPriceInData,
                 ],
                 [
-                    'name' => 'Total Pengeluaran',
+                    'name' => 'Total Expence',
                     'data' => $totalPriceOutData,
                 ],
             ],

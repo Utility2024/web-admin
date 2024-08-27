@@ -20,7 +20,7 @@ class FComelateTable extends BaseWidget
 {
     protected int|string|array $columnSpan = 'full';
 
-    protected static ?string $heading = 'Comelate Employees Count';
+    protected static ?string $heading = 'Comelate Employee Count';
 
     public function table(Table $table): Table
     {

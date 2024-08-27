@@ -19,8 +19,6 @@ class EquipmentGroundDetailStatsOverview extends BaseWidget
                 ->color('warning')
                 ->extraAttributes(['class' => 'col-md-12'])
                 ->chart([7, 2, 10, 3, 15, 4, 17]),
-            Stat::make('Measurement Ohm', 'Standart : < 1.0 Ohm'),
-            Stat::make('Measurement Volts', 'Standart : < 2.0 Volts'),
         ];
     }
 }

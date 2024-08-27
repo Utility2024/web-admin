@@ -35,7 +35,10 @@ class WarningMaterialStock extends BaseWidget
                     ->label('Description'),
                 Tables\Columns\TextColumn::make('last_stock')
                     ->label('Last Stock')
-                    ->badge(),
+                    ->badge()
+                    ->color(function ($state, $record) {
+                        return $state <= $record->minimum_stock ? 'danger' : 'success';
+                    }),
                 Tables\Columns\TextColumn::make('minimum_stock')
                     ->label('Minimum Stock')
                     ->badge(),

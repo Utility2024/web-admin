@@ -18,6 +18,7 @@ use Filament\Http\Middleware\Authenticate;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use TomatoPHP\FilamentNotes\FilamentNotesPlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -38,12 +39,12 @@ class EsdPanelProvider extends PanelProvider
             ->brandLogo(asset('images/logo_siix.png'))
             ->favicon(asset('images/logo_siix.png'))
             ->brandLogoHeight('3rem')
-            // ->profile(EditProfile::class)
+            ->profile(EditProfile::class)
             ->sidebarCollapsibleOnDesktop()
             ->brandName('ESD Portal')
             ->navigationItems([
-                NavigationItem::make('Main Menu')
-                    ->url('http://portal.siix-ems.co.id/mainMenu')
+                NavigationItem::make('Back')
+                    ->url('http://portal.siix-ems.co.id/jobs')
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
                 NavigationItem::make('dashboard')
@@ -57,6 +58,12 @@ class EsdPanelProvider extends PanelProvider
             )
             ->plugins([
                 FilamentApexChartsPlugin::make(),
+                FilamentNotesPlugin::make()
+                    ->useNotification()
+                    ->useChecklist()
+                    ->useStatus()
+                    ->useGroups()
+                    ->useShareLink()
             ])
             ->colors([
                 'primary' => Color::Amber,

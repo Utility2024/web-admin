@@ -127,10 +127,20 @@ class MaterialResource extends Resource
                         'Office Supply' => 'heroicon-o-pencil',
                     ]),
                     TextEntry::make('qty_first'),
-                    TextEntry::make('in'),
-                    TextEntry::make('out'),
-                    TextEntry::make('last_stock'),
-                    TextEntry::make('minimum_stock'),
+                    TextEntry::make('in')
+                        ->badge()
+                        ->color('info'),
+                    TextEntry::make('out')
+                        ->badge()
+                        ->color('danger'),
+                    TextEntry::make('last_stock')
+                        ->badge()
+                        ->color(function ($state, $record) {
+                            return $state <= $record->minimum_stock ? 'danger' : 'success';
+                        }),
+                    TextEntry::make('minimum_stock')
+                        ->badge()
+                        ->color('success'),
                     TextEntry::make('unit'),
                     TextEntry::make('information'),
                     TextEntry::make('price')
@@ -179,19 +189,29 @@ class MaterialResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('in')
                     ->label('In')
-                    ->sortable(),
+                    ->sortable()
+                    ->badge()
+                    ->color('info'),
                 Tables\Columns\TextColumn::make('out')
                     ->label('Out')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->badge()
+                    ->color('danger'),
                 Tables\Columns\TextColumn::make('last_stock')
                     ->label('Last Stock')
                     ->sortable()
-                    ->searchable(),                                                       
+                    ->searchable()
+                    ->badge()
+                    ->color(function ($state, $record) {
+                        return $state <= $record->minimum_stock ? 'danger' : 'success';
+                    }),                                                       
                 Tables\Columns\TextColumn::make('minimum_stock')
                     ->label('Minimum Stock')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->badge()
+                    ->color('success'),
                 Tables\Columns\TextColumn::make('unit')
                     ->label('Unit')
                     ->sortable()
