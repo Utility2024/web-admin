@@ -43,8 +43,13 @@ class EsdPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->brandName('ESD Portal')
             ->navigationItems([
+<<<<<<< HEAD
                 NavigationItem::make('Back')
                     ->url('http://portal.siix-ems.co.id/jobs')
+=======
+                NavigationItem::make('Main Menu')
+                    ->url('http://127.0.0.1:8000/mainMenu')
+>>>>>>> origin/main
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
                 NavigationItem::make('dashboard')

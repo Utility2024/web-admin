@@ -8,9 +8,16 @@ use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
+<<<<<<< HEAD
 use Filament\View\PanelsRenderHook;
 use Filament\Navigation\NavigationItem;
 use App\Filament\Pages\Auth\EditProfile;
+=======
+use App\Livewire\MyCustomComponent;
+use Filament\Navigation\NavigationItem;
+use App\Filament\Pages\Auth\EditProfile;
+use Filament\Navigation\NavigationGroup;
+>>>>>>> origin/main
 use Filament\Http\Middleware\Authenticate;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
 use Illuminate\Session\Middleware\StartSession;
@@ -38,12 +45,19 @@ class MainMenuPanelProvider extends PanelProvider
             ->brandName('Admin Portal')
             ->profile(EditProfile::class)
             ->navigationItems([
+<<<<<<< HEAD
                 NavigationItem::make('Security')
                     ->url('http://portal.siix-ems.co.id/mainMenu/my-profile')
                     ->icon('heroicon-o-shield-check')
             ])
             ->userMenuItems([
                 'logout' => MenuItem::make()->label('Log out'),
+=======
+                NavigationItem::make('My Profile')
+                    ->url('http://127.0.0.1:8000/mainMenu/profile')
+                    ->icon('heroicon-o-user')
+                    ->sort(3)
+>>>>>>> origin/main
             ])
             ->colors([
                 'primary' => Color::Amber,
