@@ -19,7 +19,7 @@
                     </p>
                     <x-filament::button 
                         tag="a" 
-                        href="http://127.0.0.1:8000/esd" 
+                        href="http://portal.siix-ems.co.id/esd" 
                         class="mt-4"
                     >
                         More Info
@@ -42,7 +42,7 @@
                     </p>
                     <x-filament::button 
                         tag="a" 
-                        href="http://127.0.0.1:8000/hr" 
+                        href="http://portal.siix-ems.co.id/hr" 
                         class="mt-4"
                     >
                         More Info
@@ -65,7 +65,7 @@
                     </p>
                     <x-filament::button 
                         tag="a" 
-                        href="http://127.0.0.1:8000/ga" 
+                        href="http://portal.siix-ems.co.id/ga" 
                         class="mt-4"
                     >
                         More Info
@@ -88,7 +88,7 @@
                     </p>
                     <x-filament::button 
                         tag="a" 
-                        href="http://127.0.0.1:8000/utility" 
+                        href="http://portal.siix-ems.co.id/utility" 
                         class="mt-4"
                     >
                         More Info
@@ -111,7 +111,7 @@
                     </p>
                     <x-filament::button 
                         tag="a" 
-                        href="http://127.0.0.1:8000/stock" 
+                        href="http://portal.siix-ems.co.id/stock" 
                         class="mt-4"
                     >
                         More Info

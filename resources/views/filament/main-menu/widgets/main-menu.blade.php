@@ -4,33 +4,7 @@
             $user = Auth::user();
             $totalJobs = 0; // Variabel untuk menghitung jumlah total card yang ditampilkan
         @endphp
-
-<<<<<<< HEAD
-=======
-        <!-- Card 1: Electrostatic Discharge -->
-        @if ($user->isAdminEsd() || $user->isSuperAdmin() || $user->isUser() || $user->isAdminHr() || $user->isAdminHr() || $user->isAdminGa() || $user->isAdminUtility())
-            @php $totalJobs++; @endphp
-            <x-filament::card class="max-w-sm">
-                <div class="relative">
-                    <img class="w-full h-48 object-cover aspect-square" src="{{ url('images/ticket.png') }}" alt="ESD Portal" />
-                </div>
-                <div class="space-y-2">
-                    <h5 class="text-lg font-bold">Ticketing</h5>
-                    <p class="text-gray-600">
-                        Make & take a ticket for work operational problem or request
-                    </p>
-                    <x-filament::button 
-                        tag="a" 
-                        href="http://127.0.0.1:8000/ticket" 
-                        class="mt-4"
-                    >
-                        More Info
-                    </x-filament::button>
-                </div>
-            </x-filament::card>
-        @endif
-
->>>>>>> origin/main
+        
         <!-- Card 2: Human Resource -->
         @if ($user->isAdminEsd() || $user->isSuperAdmin() || $user->isUser() || $user->isAdminHr() || $user->isAdminHr() || $user->isAdminGa() || $user->isAdminUtility() || $user->isSecurity() )
             @php $totalJobs++; @endphp
@@ -45,7 +19,7 @@
                     </p>
                     <x-filament::button 
                         tag="a" 
-                        href="http://127.0.0.1:8000/jobs" 
+                        href="http://portal.siix-ems.co.id/jobs" 
                         class="mt-4"
                     >
                         More Info

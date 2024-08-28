@@ -371,47 +371,21 @@ class TransactionResource extends Resource
 
     public static function getDataForYearlyChart($year): array
     {
-        $data = Transaction::selectRaw('DATE_FORMAT(date, "%m") as month, transaction_type, SUM(qty) as total_qty, SUM(total_price) as total_price')
+        $data = Transaction::selectRaw('MONTH(date) as month, COUNT(id) as total_transactions')
             ->whereYear('date', $year)
-            ->groupBy('month', 'transaction_type')
+            ->groupBy('month')
             ->orderBy('month')
             ->get();
 
-        $months = [
-            '01' => 'January', '02' => 'February', '03' => 'March', '04' => 'April',
-            '05' => 'May', '06' => 'June', '07' => 'July', '08' => 'August',
-            '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'
-        ];
-
-        $chartData = [
-            'months' => array_values($months),
-            'in' => array_fill(0, 12, 0),
-            'out' => array_fill(0, 12, 0),
-            'total_price' => array_fill(0, 12, 0),
-        ];
+        $chartData = array_fill(1, 12, 0); // Isi dengan 12 bulan (Jan-Dec) dengan nilai default 0
 
         foreach ($data as $row) {
-            $index = (int)$row->month - 1;
-        
-            if ($row->transaction_type == 'IN') {
-                $chartData['in'][$index] = number_format($row->total_qty, 2, '.', '');
-            } else {
-                $chartData['out'][$index] = number_format($row->total_qty, 2, '.', '');
-            }
-        
-            // Pastikan variabel ini ada jika menggunakan '+='
-            if (!isset($chartData['total_price'][$index])) {
-                $chartData['total_price'][$index] = 0;
-            }
-        
-            $chartData['total_price'][$index] += number_format($row->total_price, 2, '.', '');
+            $chartData[$row->month] = $row->total_transactions;
         }
-        
 
-        return $chartData;
+        return array_values($chartData);
     }
 
-    
     public static function getDataForUserChart(): array
     {
         $data = Transaction::selectRaw('pic, transaction_type, SUM(qty) as total')

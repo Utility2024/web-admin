@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -22,16 +24,19 @@ class LoginController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        // Tentukan kredensial untuk autentikasi
-        $credentials = $request->only('nik', 'password');
+        // Cari pengguna berdasarkan NIK
+        $user = User::where('nik', $request->nik)->first();
 
-        // Coba autentikasi
-        if (Auth::attempt($credentials, $request->filled('remember'))) {
-            // Autentikasi berhasil, arahkan ke halaman yang diinginkan
+        // Periksa apakah pengguna ditemukan dan password cocok
+        if ($user && Hash::check($request->password, $user->password)) {
+            // Login pengguna
+            Auth::login($user, $request->filled('remember'));
+            
+            // Arahkan ke halaman yang diinginkan
             return redirect()->intended('mainMenu');
         }
 
-        // Autentikasi gagal, tampilkan pesan kesalahan
+        // Jika login gagal, kirim pesan kesalahan
         throw ValidationException::withMessages([
             'nik' => 'NIK atau password yang Anda masukkan salah.',
         ]);

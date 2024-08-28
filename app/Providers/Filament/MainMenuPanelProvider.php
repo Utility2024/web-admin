@@ -8,16 +8,9 @@ use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
-<<<<<<< HEAD
 use Filament\View\PanelsRenderHook;
 use Filament\Navigation\NavigationItem;
 use App\Filament\Pages\Auth\EditProfile;
-=======
-use App\Livewire\MyCustomComponent;
-use Filament\Navigation\NavigationItem;
-use App\Filament\Pages\Auth\EditProfile;
-use Filament\Navigation\NavigationGroup;
->>>>>>> origin/main
 use Filament\Http\Middleware\Authenticate;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
 use Illuminate\Session\Middleware\StartSession;
@@ -45,19 +38,12 @@ class MainMenuPanelProvider extends PanelProvider
             ->brandName('Admin Portal')
             ->profile(EditProfile::class)
             ->navigationItems([
-<<<<<<< HEAD
-                NavigationItem::make('Security')
-                    ->url('http://portal.siix-ems.co.id/mainMenu/my-profile')
-                    ->icon('heroicon-o-shield-check')
+                NavigationItem::make('My Profile')
+                    ->url('http://portal.siix-ems.co.id/mainMenu/profile')
+                    ->icon('heroicon-o-user')
             ])
             ->userMenuItems([
                 'logout' => MenuItem::make()->label('Log out'),
-=======
-                NavigationItem::make('My Profile')
-                    ->url('http://127.0.0.1:8000/mainMenu/profile')
-                    ->icon('heroicon-o-user')
-                    ->sort(3)
->>>>>>> origin/main
             ])
             ->colors([
                 'primary' => Color::Amber,
@@ -67,21 +53,21 @@ class MainMenuPanelProvider extends PanelProvider
             )
             ->plugins([
                 FilamentApexChartsPlugin::make(),
-                BreezyCore::make()
-                    ->myProfile(
-                        // shouldRegisterUserMenu: true, // Sets the 'account' link in the panel User Menu (default = true)
-                        // shouldRegisterNavigation: false, // Adds a main navigation item for the My Profile page (default = false)
-                        // navigationGroup: 'Settings', // Sets the navigation group for the My Profile page (default = null)
-                        // hasAvatars: false, // Enables the avatar upload form component (default = false)
-                        slug: 'my-profile' // Sets the slug for the profile page (default = 'my-profile')
-                    )
-                    ->enableTwoFactorAuthentication(
-                        force: false, // force the user to enable 2FA before they can use the application (default = false)
-                        // action: CustomTwoFactorPage::class // optionally, use a custom 2FA page
-                    )
-                    ->withoutMyProfileComponents([
-                        'update_password'
-                    ])
+                // BreezyCore::make()
+                //     ->myProfile(
+                //         // shouldRegisterUserMenu: true, // Sets the 'account' link in the panel User Menu (default = true)
+                //         // shouldRegisterNavigation: false, // Adds a main navigation item for the My Profile page (default = false)
+                //         // navigationGroup: 'Settings', // Sets the navigation group for the My Profile page (default = null)
+                //         // hasAvatars: false, // Enables the avatar upload form component (default = false)
+                //         slug: 'my-profile' // Sets the slug for the profile page (default = 'my-profile')
+                //     )
+                //     ->enableTwoFactorAuthentication(
+                //         force: false, // force the user to enable 2FA before they can use the application (default = false)
+                //         // action: CustomTwoFactorPage::class // optionally, use a custom 2FA page
+                //     )
+                //     ->withoutMyProfileComponents([
+                //         'update_password'
+                //     ])
             ])
             ->discoverResources(in: app_path('Filament/MainMenu/Resources'), for: 'App\\Filament\\MainMenu\\Resources')
             ->discoverPages(in: app_path('Filament/MainMenu/Pages'), for: 'App\\Filament\\MainMenu\\Pages')

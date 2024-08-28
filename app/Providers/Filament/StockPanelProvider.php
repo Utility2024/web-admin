@@ -39,20 +39,10 @@ class StockPanelProvider extends PanelProvider
             ->brandName('Stock Control Material')
             ->profile(EditProfile::class)
             ->navigationItems([
-<<<<<<< HEAD
                 NavigationItem::make('Back')
                     ->url('http://portal.siix-ems.co.id/jobs')
-=======
-                NavigationItem::make('Main Menu')
-                    ->url('http://127.0.0.1:8000/mainMenu')
->>>>>>> origin/main
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
-                NavigationItem::make('dashboard')
-                    ->label(fn (): string => __('filament-panels::pages/dashboard.title'))
-                    ->url(fn (): string => Dashboard::getUrl())
-                    ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.dashboard'))
-                    ->icon('heroicon-o-home'),
             ])
             ->plugin(
                 \Hasnayeen\Themes\ThemesPlugin::make()

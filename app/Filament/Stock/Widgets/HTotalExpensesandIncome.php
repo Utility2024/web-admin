@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class HTotalExpensesandIncome extends ApexChartWidget
 {
-    protected int|string|array $columnSpan = 'full';
 
     /**
      * ID Grafik

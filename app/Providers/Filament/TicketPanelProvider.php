@@ -47,7 +47,7 @@ class TicketPanelProvider extends PanelProvider
             ])
             ->navigationItems([
                 NavigationItem::make('Main Menu')
-                    ->url('http://127.0.0.1:8000/mainMenu')
+                    ->url('http://portal.siix-ems.co.id/mainMenu')
                     ->icon('heroicon-o-arrow-left-start-on-rectangle')
                     ->sort(3),
             ])
