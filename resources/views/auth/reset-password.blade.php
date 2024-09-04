@@ -33,7 +33,7 @@
                     <!-- Email Input -->
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
-                        <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $email)" placeholder="Email" required autofocus autocomplete="username" />
+                        <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $email)" placeholder="Email" required autofocus autocomplete="username" readonly/>
                     </div>
 
                     <!-- Password Input -->

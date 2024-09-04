@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Parallax\FilamentComments\Models\Traits\HasFilamentComments;
+// use EightyNine\Approvals\Models\ApprovableModel;
 
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory, HasFilamentComments;
 
     /**
      * Kolom-kolom yang bisa diisi secara massal.
@@ -19,7 +21,6 @@ class Ticket extends Model
      * @var array
      */
     protected $fillable = [
-        'ticket_number',
         'title',
         'description',
         'file',
@@ -27,6 +28,15 @@ class Ticket extends Model
         'priority',
         'category_id',
         'assigned_to',
+        'name'
+    ];
+
+    /**
+     * Kolom-kolom yang harus diperlakukan sebagai tanggal.
+     *
+     * @var array
+     */
+    protected $dates = [
         'closed_at',
     ];
 
@@ -62,10 +72,15 @@ class Ticket extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
+    public function feedback()
+    {
+        return $this->hasMany(Feedback::class);
+    }
+
     /**
      * Boot method untuk menghubungkan event model.
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -107,6 +122,11 @@ class Ticket extends Model
         return sprintf('TC/%s/%04d', $today, $latestNumber);
     }
 
+    /**
+     * Get the URL for the file attribute.
+     *
+     * @return string
+     */
     public function getFileUrlAttribute()
     {
         return Storage::url($this->file);

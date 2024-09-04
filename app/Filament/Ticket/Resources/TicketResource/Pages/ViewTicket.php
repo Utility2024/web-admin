@@ -2,9 +2,11 @@
 
 namespace App\Filament\Ticket\Resources\TicketResource\Pages;
 
-use App\Filament\Ticket\Resources\TicketResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
+// use EightyNine\Approvals\Models\ApprovableModel;
+use App\Filament\Ticket\Resources\TicketResource;
+use Parallax\FilamentComments\Actions\CommentsAction;
 
 class ViewTicket extends ViewRecord
 {
@@ -13,7 +15,8 @@ class ViewTicket extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make(),
+            Actions\EditAction::make()
+                ->hidden(fn ($record) => in_array($record->status, ['In Progress', 'Closed'])),
         ];
     }
 }

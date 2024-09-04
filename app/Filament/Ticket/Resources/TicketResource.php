@@ -12,15 +12,21 @@ use App\Models\CategoryTicket;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
-use App\Filament\Ticket\Resources\TicketResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Ticket\Resources\TicketResource\Pages;
 use Filament\Infolists\Components\Card as InfolistCard;
+use Parallax\FilamentComments\Tables\Actions\CommentsAction;
+use Parallax\FilamentComments\Infolists\Components\CommentsEntry;
 use App\Filament\Ticket\Resources\TicketResource\RelationManagers;
+use App\Filament\Ticket\Resources\TicketResource\RelationManagers\FeedbackRelationManager;
 
 class TicketResource extends Resource
 {
@@ -32,6 +38,8 @@ class TicketResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $user = auth()->user();
+
         return $form
             ->schema([
                 Card::make()
@@ -46,33 +54,29 @@ class TicketResource extends Resource
                         
                         Forms\Components\Textarea::make('description')
                             ->required(),
-                        
+                    ])->columns(2),
+                Card::make()
+                    ->schema([       
                         FileUpload::make('file')
-                            // ->directory('foto-ticket')
+                            ->label('Photo')
                             ->disk('public'),                     
-                        
-                        Forms\Components\Select::make('status')
-                            ->options([
-                                'Open' => 'Open',
-                                'In Progress' => 'In Progress',
-                                'Closed' => 'Closed',
-                            ])
-                            ->required()
-                            ->reactive()
-                            ->afterStateUpdated(function ($state, $set) {
-                                if ($state === 'Closed') {
-                                    $set('closed_at', now()); // Set otomatis closed_at
-                                } else {
-                                    $set('closed_at', null); // Reset jika bukan Closed
-                                }
-                            }),
-                        
-                        Forms\Components\Select::make('priority')
+                    ])->columns(2),
+                Card::make()
+                    ->schema([
+                        ToggleButtons::make('priority')
                             ->options([
                                 'Low' => 'Low',
                                 'Medium' => 'Medium',
-                                'High' => 'High',
+                                'Urgent' => 'Urgent',
+                                'Critical' => 'Critical'
                             ])
+                            ->colors([
+                                'Low' => 'secondary',
+                                'Medium' => 'info',
+                                'Urgent' => 'warning',
+                                'Critical' => 'danger',
+                            ])
+                            ->inline()
                             ->required(),
                         
                         Forms\Components\Select::make('category_id')
@@ -80,9 +84,23 @@ class TicketResource extends Resource
                             ->required(),
                         
                         Forms\Components\Select::make('assigned_to')
-                            ->relationship('assignedUser', 'name')
+                            ->label('Assign To')
+                            ->options(function () use ($user) {
+                                $query = User::query()
+                                    ->select('id', 'name', 'role')
+                                    ->distinct()
+                                    ->when($user->isUser(), function ($query) {
+                                        $query->whereNotIn('role', ['SECURITY', 'USER']);
+                                    });
+        
+                                $users = $query->get();
+        
+                                return $users->mapWithKeys(function ($user) {
+                                    return [$user->id => $user->name];
+                                });
+                            })
                             ->required(),
-                    ])
+                    ])->columns(2),                
             ]);
     }
 
@@ -95,8 +113,7 @@ class TicketResource extends Resource
                     TextEntry::make('title'),
                     TextEntry::make('description'),
                     ImageEntry::make('file')
-                        ->disk('public'),
-                        // ->directory('foto-ticket'),
+                        ->label('Photo'),
                     TextEntry::make('status')
                         ->badge()
                         ->color(fn (string $state): string => match ($state) {
@@ -109,72 +126,86 @@ class TicketResource extends Resource
                         ->color(fn (string $state): string => match ($state) {
                             'Low' => 'gray',
                             'Medium' => 'warning',
-                            'Hight' => 'danger',
+                            'Urgent' => 'danger',
+                            'Critical' => 'danger'
                         }),
                     TextEntry::make('category.name'),
                     TextEntry::make('assignedUser.name'),
                     TextEntry::make('closed_at')
-                        ->label('Closed Date')
+                        ->label('Closed Date'),
                 ])->columns(2),
+                InfolistCard::make([
+                    CommentsEntry::make('filament_comments')
+                ])
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('ticket_number')
             ->columns([
                 Tables\Columns\TextColumn::make('ticket_number')
                     ->sortable()
-                    ->searchable(),
+                    ->label('Ticket Number'),
                 
                 Tables\Columns\TextColumn::make('title')
                     ->sortable()
-                    ->searchable(),
+                    ->label('Title'),
+                
+                Tables\Columns\TextColumn::make('description')
+                    ->sortable()
+                    ->label('Description'),
                 
                 Tables\Columns\TextColumn::make('status')
-                    ->sortable()
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'Open' => 'danger',
                         'In Progress' => 'warning',
                         'Closed' => 'success',
-                    }), 
-                
-                ImageColumn::make('file')
-                    ->disk('public'),
-                    // ->directory('foto-ticket'),                
+                    })
+                    ->label('Status'),
                 
                 Tables\Columns\TextColumn::make('priority')
-                    ->sortable()
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'Low' => 'gray',
                         'Medium' => 'warning',
-                        'Hight' => 'danger',
-                    }),                
+                        'Urgent' => 'danger',
+                        'Critical' => 'danger'
+                    })
+                    ->label('Priority'),
+                
                 Tables\Columns\TextColumn::make('category.name')
-                    ->sortable(),
+                    ->label('Category'),
                 
                 Tables\Columns\TextColumn::make('assignedUser.name')
-                    ->sortable(),
+                    ->label('Assigned To'),
                 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Created At'),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Updated At'),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->hidden(fn ($record) => $record->status === 'Closed')
+                    ->label('Edit'),
+
+                Tables\Actions\DeleteAction::make()
+                    ->hidden(fn ($record) => $record->status === 'Closed')
+                    ->label('Delete'),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -184,7 +215,7 @@ class TicketResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            FeedbackRelationManager::class,
         ];
     }
 

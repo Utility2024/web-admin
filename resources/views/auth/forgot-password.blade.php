@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ url('css/style.css') }}" />
-    <title>Password Reset</title>
+    <title>Forgot Password</title>
     <style>
         .text-red-500 {
             color: #f56565;
@@ -46,7 +46,7 @@
                     @csrf
                     <img src="{{ url('images/logo_siix.png') }}" alt="Logo" width="180" height="100" />
                     <hr>
-                    <h2 class="title">Reset Password</h2>
+                    <h2 class="title">Forgot Password</h2>
 
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>

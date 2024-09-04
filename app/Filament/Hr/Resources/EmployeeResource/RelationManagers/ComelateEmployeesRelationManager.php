@@ -3,12 +3,14 @@
 namespace App\Filament\Hr\Resources\EmployeeResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables\Actions\Action;
 
 class ComelateEmployeesRelationManager extends RelationManager
 {
@@ -62,8 +64,21 @@ class ComelateEmployeesRelationManager extends RelationManager
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                //
-            ])
+                SelectFilter::make('alasan_terlambat')
+                    ->options([
+                        'Macet Lalulintas' => 'Macet Lalulintas',
+                        'Masalah Kendaraan' => 'Masalah Kendaraan',
+                        'Telat Berangkat' => 'Telat Berangkat',
+                        'Keperluan Pribadi' => 'Keperluan Pribadi',
+                        'Keperluan Keluarga' => 'Keperluan Keluarga',
+                    ])
+                    ->attribute('alasan_terlambat')
+                    ->preload()
+            ])->filtersTriggerAction(
+                fn (Action $action) => $action
+                    ->button()
+                    ->label('Filter')
+            )
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
             ])

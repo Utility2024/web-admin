@@ -2,9 +2,10 @@
 
 namespace App\Filament\Esd\Resources\GroundMonitorBoxDetailResource\Pages;
 
-use App\Filament\Esd\Resources\GroundMonitorBoxDetailResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Esd\Resources\GroundMonitorBoxDetailResource;
+use App\Filament\Esd\Resources\GroundMonitorBoxDetailResource\Widgets\StandartGb;
 
 class ListGroundMonitorBoxDetails extends ListRecords
 {
@@ -14,6 +15,12 @@ class ListGroundMonitorBoxDetails extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            StandartGb::class,
         ];
     }
 }

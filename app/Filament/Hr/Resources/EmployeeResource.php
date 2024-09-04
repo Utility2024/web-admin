@@ -20,6 +20,7 @@ use Filament\Infolists\Components\Card as InfolistCard;
 use App\Filament\Hr\Resources\EmployeeResource\RelationManagers;
 use App\Filament\Hr\Resources\EmployeeResource\RelationManagers\ComelateEmployeesRelationManager;
 use Filament\Tables\Actions\Action;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EmployeeResource extends Resource
 {
@@ -139,5 +140,13 @@ class EmployeeResource extends Resource
             'view' => Pages\ViewEmployee::route('/{record}'),
             // 'edit' => Pages\EditEmployee::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

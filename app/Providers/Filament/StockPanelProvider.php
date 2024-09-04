@@ -56,7 +56,7 @@ class StockPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Stock/Resources'), for: 'App\\Filament\\Stock\\Resources')
             ->discoverPages(in: app_path('Filament/Stock/Pages'), for: 'App\\Filament\\Stock\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                \App\Filament\Pages\DashboardStock::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Stock/Widgets'), for: 'App\\Filament\\Stock\\Widgets')
             ->widgets([

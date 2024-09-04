@@ -2,28 +2,30 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
-use App\Models\EquipmentGround;
-use App\Models\Flooring;
-use App\Models\Garment;
 use App\Models\Glove;
-use App\Models\GroundMonitorBox;
+use App\Models\Ticket;
+use App\Models\Garment;
 use App\Models\Ionizer;
+use App\Models\Flooring;
 use App\Models\Packaging;
 use App\Models\Soldering;
 use App\Models\Worksurface;
-use App\Observers\EquipmentGroundObserver;
+use App\Models\EquipmentGround;
+use App\Models\GroundMonitorBox;
+use App\Observers\GlovesObserver;
+use App\Observers\TicketObserver;
 use App\Observers\FloringObserver;
 use App\Observers\GarmentObserver;
-use App\Observers\GlovesObserver;
-use App\Observers\GroundMonitorBoxObserver;
 use App\Observers\IonizerObserver;
 use App\Observers\PackagingObserver;
 use App\Observers\SolderingObserver;
+use Illuminate\Support\Facades\Event;
 use App\Observers\WorksurfaceObserver;
+use Illuminate\Auth\Events\Registered;
+use App\Observers\EquipmentGroundObserver;
+use App\Observers\GroundMonitorBoxObserver;
+use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -52,6 +54,7 @@ class EventServiceProvider extends ServiceProvider
         Packaging::observe(PackagingObserver::class);
         Soldering::observe(SolderingObserver::class);
         Worksurface::observe(WorksurfaceObserver::class);
+        Ticket::observe(TicketObserver::class);
     }
 
     /**

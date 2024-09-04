@@ -6,19 +6,25 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use Filament\Actions\Action;
 use Filament\Navigation\MenuItem;
 use Filament\Support\Colors\Color;
 use Filament\View\PanelsRenderHook;
+use Illuminate\Support\Facades\Blade;
+use Orion\FilamentBackup\BackupPlugin;
 use Filament\Navigation\NavigationItem;
 use App\Filament\Pages\Auth\EditProfile;
+use Orion\FilamentGreeter\GreeterPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
+use Orion\FilamentFeedback\FeedbackPlugin;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
+use Ercogx\FilamentOpenaiAssistant\OpenaiAssistantPlugin;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
@@ -38,12 +44,9 @@ class MainMenuPanelProvider extends PanelProvider
             ->brandName('Admin Portal')
             ->profile(EditProfile::class)
             ->navigationItems([
-                NavigationItem::make('My Profile')
-                    ->url('http://portal.siix-ems.co.id/mainMenu/profile')
-                    ->icon('heroicon-o-user')
-            ])
-            ->userMenuItems([
-                'logout' => MenuItem::make()->label('Log out'),
+                NavigationItem::make('Security')
+                    ->url('http://portal.siix-ems.co.id/mainMenu/my-profile')
+                    ->icon('heroicon-o-lock-closed')
             ])
             ->colors([
                 'primary' => Color::Amber,
@@ -53,21 +56,27 @@ class MainMenuPanelProvider extends PanelProvider
             )
             ->plugins([
                 FilamentApexChartsPlugin::make(),
-                // BreezyCore::make()
-                //     ->myProfile(
-                //         // shouldRegisterUserMenu: true, // Sets the 'account' link in the panel User Menu (default = true)
-                //         // shouldRegisterNavigation: false, // Adds a main navigation item for the My Profile page (default = false)
-                //         // navigationGroup: 'Settings', // Sets the navigation group for the My Profile page (default = null)
-                //         // hasAvatars: false, // Enables the avatar upload form component (default = false)
-                //         slug: 'my-profile' // Sets the slug for the profile page (default = 'my-profile')
-                //     )
-                //     ->enableTwoFactorAuthentication(
-                //         force: false, // force the user to enable 2FA before they can use the application (default = false)
-                //         // action: CustomTwoFactorPage::class // optionally, use a custom 2FA page
-                //     )
-                //     ->withoutMyProfileComponents([
-                //         'update_password'
-                //     ])
+                GreeterPlugin::make()
+                    ->message('Welcome Back')
+                    ->action(
+                        Action::make('manage_profile')
+                            ->label('Manage My Profile')
+                            ->icon('heroicon-o-user')
+                            ->url('http://portal.siix-ems.co.id/mainMenu/profile')
+                    )
+                    ->sort(-1)
+                    ->columnSpan('full'),
+
+                BreezyCore::make()
+                    ->myProfile(
+                        slug: 'my-profile'
+                    )
+                    ->enableTwoFactorAuthentication(
+                        force: false
+                    )
+                    ->withoutMyProfileComponents([
+                        'update_password'
+                    ])
             ])
             ->discoverResources(in: app_path('Filament/MainMenu/Resources'), for: 'App\\Filament\\MainMenu\\Resources')
             ->discoverPages(in: app_path('Filament/MainMenu/Pages'), for: 'App\\Filament\\MainMenu\\Pages')
@@ -76,11 +85,9 @@ class MainMenuPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/MainMenu/Widgets'), for: 'App\\Filament\\MainMenu\\Widgets')
             ->widgets([
-                // Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
             ])
             // ->renderHook(
-            //     // PanelsRenderHook::BODY_END,
             //     PanelsRenderHook::FOOTER,
             //     fn() => view('footer')
             // )

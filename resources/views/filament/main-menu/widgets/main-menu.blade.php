@@ -38,8 +38,15 @@
                 <div class="space-y-2">
                     <h5 class="text-lg font-bold">Ticketing</h5>
                     <p class="text-gray-600">
-                        Cooming Soon
+                        Create Ticket For Problem (UTILITY, ESD, HR&GA)
                     </p>
+                    <x-filament::button 
+                        tag="a" 
+                        href="http://portal.siix-ems.co.id/ticket" 
+                        class="mt-4"
+                    >
+                        More Info
+                    </x-filament::button>
                 </div>
             </x-filament::card>
         @endif

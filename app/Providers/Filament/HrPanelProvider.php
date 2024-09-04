@@ -59,7 +59,7 @@ class HrPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Hr/Resources'), for: 'App\\Filament\\Hr\\Resources')
             ->discoverPages(in: app_path('Filament/Hr/Pages'), for: 'App\\Filament\\Hr\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                \App\Filament\Pages\DashboardHr::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Hr/Widgets'), for: 'App\\Filament\\Hr\\Widgets')
             ->widgets([

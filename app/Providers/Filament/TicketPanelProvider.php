@@ -6,11 +6,14 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use Kenepa\Banner\BannerPlugin;
 use Filament\Support\Colors\Color;
 use Filament\Navigation\NavigationItem;
+// use EightyNine\Approvals\ApprovalPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use TomatoPHP\FilamentTenancy\FilamentTenancyPlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -38,12 +41,12 @@ class TicketPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Ticket/Resources'), for: 'App\\Filament\\Ticket\\Resources')
             ->discoverPages(in: app_path('Filament/Ticket/Pages'), for: 'App\\Filament\\Ticket\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                \App\Filament\Pages\DashboardTicket::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Ticket/Widgets'), for: 'App\\Filament\\Ticket\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\AccountWidget::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
             ->navigationItems([
                 NavigationItem::make('Main Menu')
@@ -71,6 +74,7 @@ class TicketPanelProvider extends PanelProvider
             )
             ->plugins([
                 FilamentApexChartsPlugin::make(),
+                // ApprovalPlugin::make()
             ]);
     }
 }

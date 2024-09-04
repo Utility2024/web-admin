@@ -59,7 +59,7 @@ class GaPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Ga/Resources'), for: 'App\\Filament\\Ga\\Resources')
             ->discoverPages(in: app_path('Filament/Ga/Pages'), for: 'App\\Filament\\Ga\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                \App\Filament\Pages\DashboardGa::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Ga/Widgets'), for: 'App\\Filament\\Ga\\Widgets')
             ->widgets([

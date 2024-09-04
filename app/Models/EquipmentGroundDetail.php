@@ -6,9 +6,7 @@ use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-
-
-use EightyNine\Approvals\Models\ApprovableModel;
+// use EightyNine\Approvals\Models\ApprovableModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EquipmentGroundDetail extends Model 

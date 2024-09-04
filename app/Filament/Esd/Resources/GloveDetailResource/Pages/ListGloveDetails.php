@@ -5,6 +5,7 @@ namespace App\Filament\Esd\Resources\GloveDetailResource\Pages;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use App\Filament\Esd\Resources\GloveDetailResource;
+use App\Filament\Esd\Resources\GloveDetailResource\Widgets\StandartGlove;
 use App\Filament\Esd\Resources\GloveDetailResource\Widgets\GloveDetailStatsOverview;
 
 class ListGloveDetails extends ListRecords
@@ -21,7 +22,8 @@ class ListGloveDetails extends ListRecords
     protected function getHeaderWidgets(): array
     {
         return [
-            GloveDetailStatsOverview::class,
+            // GloveDetailStatsOverview::class,
+            StandartGlove::class,
         ];
     }
 }

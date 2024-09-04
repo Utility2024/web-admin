@@ -66,7 +66,7 @@ class EsdPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Esd/Resources'), for: 'App\\Filament\\Esd\\Resources')
             ->discoverPages(in: app_path('Filament/Esd/Pages'), for: 'App\\Filament\\Esd\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                \App\Filament\Pages\DashboardESD::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Esd/Widgets'), for: 'App\\Filament\\Esd\\Widgets')
             ->widgets([

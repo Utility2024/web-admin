@@ -5,6 +5,7 @@ namespace App\Filament\Esd\Resources\GarmentDetailResource\Pages;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use App\Filament\Esd\Resources\GarmentDetailResource;
+use App\Filament\Esd\Resources\GarmentDetailResource\Widgets\StandartGarment;
 use App\Filament\Esd\Resources\GarmentDetailResource\Widgets\GarmentDetailStatsOverview;
 
 class ListGarmentDetails extends ListRecords
@@ -21,7 +22,8 @@ class ListGarmentDetails extends ListRecords
     protected function getHeaderWidgets(): array
     {
         return [
-            GarmentDetailStatsOverview::class,
+            //GarmentDetailStatsOverview::class,
+            StandartGarment::class,
         ];
     }
 }

@@ -3,18 +3,12 @@
 namespace App\Filament\Hr\Widgets;
 
 use Filament\Tables;
-use App\Models\ComelateCount; // Menggunakan model ComelateCount
+use App\Models\Employee;
 use Filament\Tables\Table;
+use App\Models\ComelateCount;
+use Filament\Tables\Actions\ViewAction;
 use Illuminate\Support\Facades\Auth;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Filters\Indicator;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Widgets\TableWidget as BaseWidget;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\DatePicker;
 
 class FComelateTable extends BaseWidget
 {
@@ -35,23 +29,48 @@ class FComelateTable extends BaseWidget
 
         // If the user does not have the 'SECURITY' role, show the table
         return $table
-            ->query(ComelateCount::query()) // Menggunakan model ComelateCount
+            ->query(ComelateCount::query())
             ->columns([
                 Tables\Columns\TextColumn::make('nik')
                     ->label('NIK')
-                    ->sortable()
-                    ->searchable(),
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Name')
-                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('department')
                     ->label('Department')
-                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('count_comelate')
-                    ->label('Comelate Count') // Sesuaikan label dengan kolom model
+                    ->label('Comelate Count')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
+                    ->formatStateUsing(function (ComelateCount $record): string {
+                        // Temukan employee berdasarkan user_login
+                        $employee = Employee::where('user_login', $record->nik)->first();
+                
+                        // Kembalikan status berdasarkan apakah employee ditemukan atau tidak
+                        if ($employee) {
+                            return 'Active'; // Jika employee ditemukan
+                        }
+                
+                        return 'Tidak Active'; // Jika employee tidak ditemukan
+                    })
+                    ->default('Tidak Active'),
+            ])
+            ->actions([
+                ViewAction::make()
+                    ->label('View')
+                    ->url(function (ComelateCount $record): string {
+                        $employee = Employee::where('user_login', $record->nik)->first();
+
+                        // Pastikan employee ditemukan
+                        if ($employee) {
+                            return "http://portal.siix-ems.co.id/hr/employees/{$employee->ID}";
+                        }
+
+                        return "Tidak Ada Data"; // Arahkan ke URL kosong jika data tidak ditemukan
+                    }),
             ])
             ->defaultSort('count_comelate', 'desc');
     }

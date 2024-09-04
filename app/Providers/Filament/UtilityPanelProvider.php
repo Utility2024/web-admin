@@ -59,7 +59,7 @@ class UtilityPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Utility/Resources'), for: 'App\\Filament\\Utility\\Resources')
             ->discoverPages(in: app_path('Filament/Utility/Pages'), for: 'App\\Filament\\Utility\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                \App\Filament\Pages\DashboardUtility::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Utility/Widgets'), for: 'App\\Filament\\Utility\\Widgets')
             ->widgets([

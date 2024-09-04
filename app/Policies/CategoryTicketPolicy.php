@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\CategoryCategoryTicket;
+use App\Models\CategoryTicket;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -13,15 +13,15 @@ class CategoryTicketPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, CategoryCategoryTicket $CategoryTicket): bool
+    public function view(User $user, CategoryTicket $CategoryTicket): bool
     {
-        return $user->isSuperAdmin() || $user->isAdminEsd() || $user->isUser();
+        return $user->isSuperAdmin();
     }
 
     /**
@@ -29,21 +29,21 @@ class CategoryTicketPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isSuperAdmin() || $user->isAdminEsd();
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, CategoryCategoryTicket $CategoryTicket): bool
+    public function update(User $user, CategoryTicket $CategoryTicket): bool
     {
-        return $user->isSuperAdmin() || $user->isAdminEsd();
+        return $user->isSuperAdmin();
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, CategoryCategoryTicket $CategoryTicket): bool
+    public function delete(User $user, CategoryTicket $CategoryTicket): bool
     {
         return $user->isSuperAdmin();
     }
@@ -51,7 +51,7 @@ class CategoryTicketPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, CategoryCategoryTicket $CategoryTicket): bool
+    public function restore(User $user, CategoryTicket $CategoryTicket): bool
     {
         return $user->isSuperAdmin();
     }
@@ -59,7 +59,7 @@ class CategoryTicketPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, CategoryCategoryTicket $CategoryTicket): bool
+    public function forceDelete(User $user, CategoryTicket $CategoryTicket): bool
     {
         return $user->isSuperAdmin();
     }

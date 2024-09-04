@@ -5,6 +5,7 @@ namespace App\Filament\Esd\Resources\WorksurfaceDetailResource\Pages;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use App\Filament\Esd\Resources\WorksurfaceDetailResource;
+use App\Filament\Esd\Resources\WorksurfaceDetailResource\Widgets\StandartWorksurface;
 use App\Filament\Esd\Resources\WorksurfaceDetailResource\Widgets\WorksurfaceDetailStatsOverview;
 
 class ListWorksurfaceDetails extends ListRecords
@@ -21,7 +22,8 @@ class ListWorksurfaceDetails extends ListRecords
     protected function getHeaderWidgets(): array
     {
         return [
-            WorksurfaceDetailStatsOverview::class,
+            // WorksurfaceDetailStatsOverview::class,
+            StandartWorksurface::class,
         ];
     }
 }
